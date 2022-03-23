@@ -1,0 +1,7 @@
+{
+  "name": "SmatBot",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
