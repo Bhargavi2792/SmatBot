@@ -133,6 +133,11 @@ export class LoginPage implements OnInit {
     console.log("Sign Up button clicked");
     this.route.navigate(['sign-up']);
   }
+  // signupdbtnclicked(){
+  //   console.log("Sign Up button clicked");
+  //   this.route.navigate(['sign-up']);
+  // }
+
   
   initForm(){
     this.loginForm = new FormGroup({
