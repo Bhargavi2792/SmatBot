@@ -1,0 +1,28 @@
+<ion-content [fullscreen]="true">
+  <ion-refresher slot="fixed" (ionRefresh)="getActiveChatUsers($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-searchbar placeholder="Type here " [(ngModel)]="filterItem" animated="true"></ion-searchbar>
+  <ion-row *ngIf="activeUsersList != undefined">
+    <ion-col *ngIf="activeUsersList.length == 0">
+      <div class="ion-text-center">
+      <ion-text color="lighter" >
+        <h6> No Users are Online</h6>
+      </ion-text>
+    </div>
+    </ion-col>
+  </ion-row> 
+  <ion-grid *ngFor="let new_user of activeUsersList | filter:filterItem;let i=index"  style="color:#FFFFFF">
+    <ion-item button (click)="activebotClicked(new_user)" detail="false" lines="none">
+      <ion-avatar slot="start" style="position: center;">
+        <ion-img src="https://www.smatbot.com/img/Header/Logo_sp.svg"></ion-img>
+      </ion-avatar>
+      <ion-label color="dark" class="ion-text-wrap">{{new_user.ip_address}}</ion-label>
+      <ion-icon *ngIf="new_user.is_closed === '1'" style="color:red;height:15px;" name ="ellipse"></ion-icon>
+      <ion-icon *ngIf="new_user.is_closed !== '1'"  style="color:green;height:15px;padding-right: 0px !important;" name ="ellipse" no-padding></ion-icon>
+      <ion-button slot="end"  fill="clear" (click)="CreateActivepopup(i) ;$event.stopPropagation();">
+        <ion-icon  name="ellipsis-vertical-outline"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-grid>
+</ion-content>

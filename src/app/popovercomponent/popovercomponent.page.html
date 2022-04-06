@@ -1,0 +1,62 @@
+<ion-content>
+  <ion-header style="height:45px;font-size:15px !important;text-align: center;">
+    <ion-title >
+    <p style="font-size: 15px;font-weight: 500;font-weight: bold !important;">User Info</p></ion-title>
+  </ion-header>
+  <ion-list style="padding-top: 20px !important;padding-right: 20px !important;padding-left: 20px !important; padding-bottom: 20px;">
+    <ion-label>
+      <ion-text color="lighter" style="color: gray;font-size: 1px;padding-bottom: 20px;" *ngIf="selectedChat.ip_address!==''" >
+        <p>IP Address</p>
+      </ion-text>
+      <ion-text color="lighter" style="color: black;">
+        <ion-row style="height:5px"></ion-row>
+        <h4 style="margin-left: 0;margin-right: 0;margin-top: 2px;margin-bottom: 2px;font-size: 14px;
+         font-weight: normal;line-height: normal;color: black;font-weight: 600;">
+          {{selectedChat.ip_address}}
+        </h4>
+      </ion-text>
+      <ion-text color="lighter" style="color: gray;font-size: 1px;" *ngIf="selectedChat.user_location!==''" >
+        <ion-row style="height: 10px"></ion-row>
+        <p> User Location</p>
+      </ion-text>
+      <ion-text color="lighter" style="color: black;">
+        <ion-row style="height:5px"></ion-row>
+        <h3  style="font-weight: bold;">  {{selectedChat.user_location}}</h3>
+      </ion-text>
+      <ion-text color="lighter" style="color: gray;font-size: 1px;" *ngIf="selectedChat.user_url!==''">
+        <ion-row style="height:10px"></ion-row>
+        <p> User Url</p>
+      </ion-text>
+      <ion-text color="lighter" style="color: black;" >
+        <ion-row style="height:5px"></ion-row>
+        <h3  style="font-weight: bold;"> {{selectedChat.user_url}}</h3>
+      </ion-text>
+      <ion-text color="lighter" style="color: gray;font-size: 1px;" *ngIf="selectedChat.agent_name!==''">
+        <ion-row style="height:10px"></ion-row>
+        <p> Name</p>
+      </ion-text>
+      <ion-text color="lighter" style="color: black;" >
+        <ion-row style="height:5px"></ion-row>
+        <h3 style="font-weight: bold;">{{selectedChat.agent_name}}</h3>
+      </ion-text>
+      <ion-text color="lighter" *ngIf="feedbackRating!==''" style="color: gray;font-size: 1px;">
+        <ion-row style="height:10px"></ion-row>
+        <p> Rating:</p>
+      </ion-text>
+      <ion-text color="lighter" style="color: black;">
+        <ion-row style="height:5px"></ion-row>
+        <h3 style="font-weight: bold;">{{feedbackRating}}</h3>
+      </ion-text>
+      <ion-text color="lighter" *ngIf="feedbackMsg!==''" style="color: gray;font-size: 1px;">
+        <ion-row style="height:10px"></ion-row>
+        <p>Message</p>
+      </ion-text>
+      <ion-text color="lighter" style="color: black;">
+        <h3  style="font-weight: bold;">{{feedbackMsg}}</h3>
+      </ion-text>
+    </ion-label>
+  </ion-list>
+</ion-content>
+        
+  
+  

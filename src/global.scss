@@ -24,3 +24,126 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+// @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap');
+@font-face {
+  font-family: 'Mulish';
+  src: url('./assets/fonts/static/Mulish-Light.ttf');
+  font-weight: 'src\assets\fonts\Mulish-VariableFont_wght.ttf';
+    font-style: normal;
+}
+* {
+  font-family: 'Mulish' !important;
+}
+
+// ion-input {
+//     border: 1px solid darkgrey;
+//     border-radius:6px;
+//     font-size: 5px; 
+//     padding-left: 20px;
+// }
+
+
+
+ion-button {
+    color:#465DEF !important;
+    border: 1px;
+    border-radius: 6px;
+
+  //   :host {
+  //     padding-left: 5px !important;
+  //     padding-right: 5px !important;
+  //     padding-inline: 5px !important;
+  // }
+    .button-native{
+      padding-left:5px !important;
+      padding-right: 5px;
+      padding-inline: 5px;
+    }
+}
+
+ion-content {
+  user-select: auto !important;
+
+// font-family: 'Poppins' !important;
+// font-size:1.1em;
+// background-color: white ;
+
+#form{
+    margin-top: 15px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+#header {
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+}
+
+h1 {
+    font-weight: 700;
+    font-size: 26px;
+    color:black;
+}
+}
+// header{
+//   position:sticky !important;
+//     top:0 !important;
+//     // scroll-padding-top: 70px !important;
+// }
+
+
+ion-item{
+    --ion-background-color: white;
+    // border-bottom: 1px solid #dedede;
+    // border-radius: 10px 10px 10px 10px;
+ }
+
+
+
+
+.icon-user {
+    font-size: large;
+    color:white;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  
+  .icon-chatbot {
+    font-size: medium;
+    color: #465DEF;
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+  
+  .item-bg-chatbot {
+    --ion-background-color:white;
+    border: 2px solid whitesmoke;
+    border-radius:10px;
+  }
+  
+  .item-bg-user {
+    --ion-background-color:darkviolet;
+    border: 2px solid white;
+    border-radius:10px;
+  }
+  
+  
+  ion-textarea {
+    font-size:10px;
+    // color: darkgreen; 
+    height:5%;
+    // --padding-top: 5px!important;
+  }
+  ion-footer{
+    height: 10%;
+    background-color:white;
+  }
+  ion-searchbar{
+    --box-shadow: none !important;
+    border-bottom: 0.25px lightgray inset;
+    border-color: lightgrey !important;
+
+}
+
+
+

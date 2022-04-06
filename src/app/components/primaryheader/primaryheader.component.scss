@@ -1,0 +1,10 @@
+.toolbar-title {
+    text-overflow: inherit;
+    white-space: normal;
+ }
+ ion-toolbar{
+    --background: #465DEF !important;
+  }
+  ion-button{
+      --ion-color-base: none !important;
+  }

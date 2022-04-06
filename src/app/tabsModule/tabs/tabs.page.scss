@@ -1,0 +1,83 @@
+.message {
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 4px;
+    white-space: pre-wrap;
+  }
+   
+  .my-message {
+    background: var(--ion-color-tertiary);
+    color:green;
+  }
+   
+  .other-message {
+    background: var(--ion-color-secondary);
+    color:green;
+  }
+   
+  .time {
+    color: blueviolet;
+    float: right;
+    font-size: small;
+  }
+   
+  .message-input {
+    margin-top: 0px;
+    border: 1px solid var(--ion-color-medium);
+    border-radius: 10px;
+    background:white;
+  }
+   
+  .msg-btn {
+    --padding-start: 0.5em;
+    --padding-end: 0.5em;
+  }
+  ion-content {
+    --background: none;
+    // background-image: url('/assets/imgs/bg_1.jpg');
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  
+  .icon-user {
+    font-size: large;
+    color:black;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  
+  .icon-chatbot {
+    font-size: large;
+    color:lightsalmon;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  
+  .item-bg-chatbot {
+    --ion-background-color:lightyellow;
+    border: 2px solid lightgray;
+    border-radius:10px;
+  }
+  
+  .item-bg-user {
+    --ion-background-color:red;
+    border: 2px solid lightgray;
+    border-radius:10px;
+  }
+  
+  
+  ion-textarea {
+    font-size:26px;
+    color: darkgreen; 
+  }
+  ion-tab-button[aria-selected=true] {
+    border-bottom: 2px #465DEF inset;
+    font-size: 14px ;
+    text-transform:uppercase !important;
+    font-weight: bolder;
+  }
+
+  ion-toolbar{
+    --background: #465DEF !important;
+  }

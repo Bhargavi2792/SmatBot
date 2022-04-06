@@ -1,0 +1,14 @@
+<ion-content scrollPosition="false" [fullscreen]="true">
+  <ion-searchbar placeholder="Type here" [(ngModel)]="filterItem" animated="true"></ion-searchbar>
+  <ion-grid *ngFor="let user of closedUsersList | filter:filterItem">
+    <ion-item button (click)="closedbotClicked(user)" detail="false" lines="none">
+      <ion-avatar slot="start">
+        <img src="https://www.smatbot.com/img/Header/Logo_sp.svg">
+      </ion-avatar>
+      <ion-label color="dark" class="ion-text-wrap">{{user.ip_address}}</ion-label>
+    </ion-item>
+  </ion-grid> 
+  <ion-infinite-scroll threshold="100px" position="bottom" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading More"></ion-infinite-scroll-content>
+  </ion-infinite-scroll> 
+</ion-content>

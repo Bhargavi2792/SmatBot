@@ -1,0 +1,26 @@
+<ion-header>
+  <app-primaryheader headerTitle = "{{title}}" [showMainMenu]="true"></app-primaryheader>
+</ion-header>
+<ion-content [fullscreen]="true">
+  <ion-refresher slot="fixed" (ionRefresh)="getChatbots($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+    <ion-searchbar placeholder="Search" [(ngModel)]="filterItem" animated="true" ></ion-searchbar>
+  <ion-grid *ngFor="let item of chatbots | filter:filterItem"  style="color:#FFFFFF" >
+    <ion-item button (click)="botButtonClicked(item)" detail="false" lines="none">
+      <ion-avatar slot="start" style="position: center;">
+        <ion-img [src]="item.avatar_url" style="position: center;"></ion-img>
+      </ion-avatar>
+      <ion-label>
+        <ion-text color="dark">
+          <h2>{{item.name}}</h2>
+        </ion-text>
+        <ion-text color="secondary">
+          <p>{{setChatStatus(item)}}</p>
+        </ion-text>
+      </ion-label>
+    </ion-item>
+  </ion-grid>
+</ion-content>
+
+

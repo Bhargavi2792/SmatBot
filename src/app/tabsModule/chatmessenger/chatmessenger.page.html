@@ -1,0 +1,83 @@
+<ion-header slot="fixed">
+  <ion-toolbar>
+    <ion-title *ngIf="isFrmClosedChat ==='false'" style="font-size: 16px !important;color: #FFFFFF !important;">{{title}}</ion-title>
+    <ion-title *ngIf="isFrmClosedChat ==='true'" style="position: start;margin-left:0px !important;color: #FFFFFF !important;">Transcript</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button text="" icon="chevron-back-outline" style="color: #FFFFFF !important;"></ion-back-button>
+    </ion-buttons >
+    <ion-buttons slot="end">
+    <ion-button  fill="clear" (click)="showUserDetails($event)" color="light" style="margin-right:0px !important;">
+      <ion-icon size="small" slot="icon-only" name="information-circle" ></ion-icon>
+    </ion-button>
+    <ion-button  *ngIf="isFrmClosedChat ==='false'" slot="end" fill="clear" (click)="CreateActivepopup($event)" color="light" style="padding-left:5px!important;padding-right:5px!important;padding-inline:5px">
+      <ion-icon size="small" slot="icon-only" name="ellipsis-vertical-outline"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar *ngIf="isstartedTyping" color="primary">
+    <ion-title size="small">typing...</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content #content>
+  <ion-row >
+    <ion-col *ngIf="chatUser.messages == ''">
+      <div class="ion-text-center">
+        <ion-text color="dark" style="font: bolder;">
+            <img style="height: 80px;width:80px;padding-top: 30px;" src="https://custpostimages.s3.ap-south-1.amazonaws.com/sb_images/no_images_in_live_chat.jpeg">
+            <h4 style="padding-top:10px;font: bolder !important;font-weight: 500;"> No Conversation </h4>
+        </ion-text>
+      </div>
+    </ion-col>
+  </ion-row>
+  <ion-grid>
+    <ion-row *ngFor="let message of chatUser.messages">
+      <ion-col size="8"  *ngIf="message.type ==='user'" class="message other-message" text-left style="height:fit-content">
+        <div *ngIf="!isImgAvbl(message.text)" class="item item-text-wrap" [innerHtml]="message.text" ></div>
+        <img *ngIf="isImgAvbl(message.text)" src= "{{getImgUrl(message.text)}}" (click)="clickImage(getImgUrl(message.text))">
+        <div class="time ion-text-right">
+          {{message.created_at | date:'HH:mm'}}
+        </div>
+      </ion-col>
+      <ion-col offset="4" size="8"  *ngIf="message.type ==='customer'"  class="message my-message" text-right  style="height:fit-content;padding-right: 10px !important;">
+        <div *ngIf="!isCustomerImgAvbl(message.text)" [innerHtml]="message.text"></div>
+        <img *ngIf="isCustomerImgAvbl(message.text)" src = "{{setmsgText(message.text)}}" height="200" width="200" (click)="clickImage(setmsgText(message.text))"/>
+        <div class="time ion-text-right">
+          {{message.created_at | date:'HH:mm'}}
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+
+<ion-footer *ngIf="isFrmClosedChat ==='false'" style="height: auto;">
+  <form [formGroup]="footerForm">
+    <ion-grid style="padding-top: 0%;padding-bottom: 0%;">
+      <ion-row align-items-center style="padding-right: 5px !important;">
+        <ion-col size="8">
+          <ion-input maxRows="4" 
+          (ionChange)="userStartedTyping()" 
+          style="position:relative;padding-left:10px!important;padding-right:10px!important;color: black !important;" 
+          strong="true" 
+          formControlName="inputText"
+          placeholder="Type here..."
+          autofocus="true"></ion-input>
+        </ion-col>
+        <ion-col size="2">
+          <ion-button (click)="getPicture()" fill="clear">
+            <ion-img style="height:24px; width:24px;" src="https://custpostimages.s3.ap-south-1.amazonaws.com/sb_images/mobile_app_attached_icon.png"></ion-img>
+          </ion-button>
+        </ion-col>
+        <ion-col size="2" >
+          <ion-button   type="submit"  
+          fill="clear"
+          (mousedown)="sendMessageBtnAction(); $event.preventDefault()">
+          <ion-img style="height:24px; width:24px;" src="https://custpostimages.s3.ap-south-1.amazonaws.com/sb_images/mobile_app_send_icon.png"></ion-img>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-footer>
+
+

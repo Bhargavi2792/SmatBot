@@ -1,0 +1,7 @@
+<ion-toolbar  mode="ios">
+  <ion-buttons style="color: #FFFFFF;" slot="start" *ngIf="showMainMenu">
+    <ion-menu-button style="color: #FFFFFF;" menu="main-menu"></ion-menu-button>
+  </ion-buttons>
+  <ion-button *ngIf="showcustomheaderTitle" size="medium" expand="full" color="primary" (click)="backbtnAction()">{{headerTitle}}</ion-button>
+  <ion-title style="color: #FFFFFF;" *ngIf="showheaderTitle" size="medium" >{{headerTitle}}</ion-title>
+</ion-toolbar>
