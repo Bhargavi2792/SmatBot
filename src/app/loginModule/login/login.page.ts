@@ -27,31 +27,28 @@ export class LoginPage implements OnInit {
     quality: 50
   };
   passwordType: string = 'password';
- passwordIcon: string = 'eye-off';
- public showPassword: boolean = false;
+  passwordIcon: string = 'eye-off';
+  public showPassword: boolean = false;
   constructor(private route : Router,
   public apiservice:ApiService,
   private _formBuilder: FormBuilder,
   public utils:UtilsService,
   private socket:SocketService,
   private platform:Platform,
-  // private camera: Camera,
   public actionSheetController: ActionSheetController
-
   ) { }
   
   
+
   ngOnInit() {
     this.setFormValidations();
   }
 
+
   hideShowPassword() {
-    // this.passwordType = this.passwordType === 'text' ? 'password' : 'text';
-    // this.passwordIcon = this.passwordIcon === 'eye-off' ? 'eye' : 'eye-off';
     this.showPassword = !this.showPassword;
-}
+  }
   
- 
 
   setFormValidations(){
     this.loginForm = this._formBuilder.group({
@@ -108,6 +105,7 @@ export class LoginPage implements OnInit {
             this.utils.setagentStatusData({
               agentStatus: (response as any).data.agent_status
             });
+
             console.log("agent_id",(response as any).data.agent_id);
             console.log("agent_name",(response as any).data.full_name);
             console.log("agent_status",(response as any).data.agent_status);
@@ -133,12 +131,7 @@ export class LoginPage implements OnInit {
     console.log("Sign Up button clicked");
     this.route.navigate(['sign-up']);
   }
-  // signupdbtnclicked(){
-  //   console.log("Sign Up button clicked");
-  //   this.route.navigate(['sign-up']);
-  // }
-
-  
+   
   initForm(){
     this.loginForm = new FormGroup({
       email: new FormControl('',[Validators.required]),

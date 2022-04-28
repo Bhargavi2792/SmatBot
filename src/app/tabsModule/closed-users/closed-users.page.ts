@@ -46,7 +46,7 @@ export class ClosedUsersPage implements OnInit {
 
   ///*** Method to get active chat users ***///
   getClosedChatUsers(index:string){
-    this.utils.showLoader("Please wait while we fetch your closed chat users list...");
+    // this.utils.showLoader("Please wait while we fetch your closed chat users list...");
     let body = new URLSearchParams();
     body.set('chatbot_id', this.selectedBot.id);
     body.set('index',index);

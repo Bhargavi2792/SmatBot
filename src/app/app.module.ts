@@ -20,11 +20,13 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { Camera, CameraResultType } from '@capacitor/camera';
 import { Capacitor } from '@capacitor/core';
 import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
+import { FileChooser } from '@ionic-native/file-chooser/ngx';
+import {Base64} from "@ionic-native/base64/ngx";
 
 
 
 
-const config: SocketIoConfig = { url: 'https://www.smatbot.com:8000', options: {} };
+const config: SocketIoConfig = { url: 'https://www.smatbot.com:8007', options: {} };
 
 @NgModule({
   declarations: [AppComponent],
@@ -51,7 +53,9 @@ const config: SocketIoConfig = { url: 'https://www.smatbot.com:8000', options: {
     ApiService,
     BackgroundMode,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    PhotoViewer
+    PhotoViewer,
+    FileChooser,
+    Base64
 
   ],
   bootstrap: [AppComponent],

@@ -8,6 +8,9 @@ import { Socket } from 'ngx-socket-io';
 import { ActivepopupPage } from '../../activepopup/activepopup.page';
 import { IonContent, IonInfiniteScrollContent, PopoverController,ModalController,Platform,NavController} from '@ionic/angular';
 import { ChatmessengerPage} from '../chatmessenger/chatmessenger.page';
+import { ProfileSendRes } from '../../Model/profilesendres';
+
+
 
 declare var window;
 @Component({
@@ -241,6 +244,16 @@ export class ActiveUsersPage implements OnInit {
         }
       }
     });
+    this.apiservice.getresetUnreadCounter().then((response)=> {
+      console.log(response);
+      this.utils.hideLoader();
+      if((response as any).errorStatus) {
+        console.log("Failure response in Reset Unread Messages",response);
+        this.utils.showalert('Error','Something went wrong please try again after sometime','Ok');
+      } else {
+        console.log("Success response in Reset Unread messages",(response as any).data);
+      }
+    })
   }
 
 

@@ -3,9 +3,9 @@ import { PopoverController,NavParams,ModalController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { Socket } from 'ngx-socket-io';
 import { ChatUsersResponse } from '../Model/chatusersresponse';
-import  {UtilsService} from '../services/utils.service';
-import {ApiService} from '../services/api.service';
-import { AssignagentpopupPage} from '../assignagentpopup/assignagentpopup.page';
+import { UtilsService } from '../services/utils.service';
+import { ApiService } from '../services/api.service';
+import { AssignagentpopupPage } from '../assignagentpopup/assignagentpopup.page';
 import { AssignAgent } from '../Model/assignagent';
 
 

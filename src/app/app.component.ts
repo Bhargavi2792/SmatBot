@@ -13,6 +13,8 @@ import { Location } from '@angular/common';
 import { Capacitor } from '@capacitor/core';
 import { App } from '@capacitor/app';
 
+
+
 // import { FCM } from "@capacitor-community/fcm";
 import {
   ActionPerformed,
@@ -60,7 +62,7 @@ export class AppComponent {
   }
   initializeApp() {
     this.platform.ready().then(() => { 
-      this.pages = [ 
+      this.pages = [
         {name:'Live Chat Status',icon:false,showToggle:true},
         {name:'Logout',icon:true,showToggle:false}
       ];

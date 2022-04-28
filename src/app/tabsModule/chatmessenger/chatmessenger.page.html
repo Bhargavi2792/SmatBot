@@ -15,7 +15,7 @@
   </ion-buttons>
   </ion-toolbar>
   <ion-toolbar *ngIf="isstartedTyping" color="primary">
-    <ion-title size="small">typing...</ion-title>
+    <ion-title size="small" style="position: start;color:#FFFFFF !important">typing...</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -41,7 +41,9 @@
       </ion-col>
       <ion-col offset="4" size="8"  *ngIf="message.type ==='customer'"  class="message my-message" text-right  style="height:fit-content;padding-right: 10px !important;">
         <div *ngIf="!isCustomerImgAvbl(message.text)" [innerHtml]="message.text"></div>
-        <img *ngIf="isCustomerImgAvbl(message.text)" src = "{{setmsgText(message.text)}}" height="200" width="200" (click)="clickImage(setmsgText(message.text))"/>
+        <!-- <div *ngIf="!isCustomerImgAvbl(message.text) || message.text ===''" [innerHtml]="message.text">Message cannot be empty</div> -->
+        <img *ngIf="isCustomerImgAvbl(message.text)" src = "{{setmsgText(message.text)}}" height="200" width="200" (click)="clickImage(setmsgText(message.text))"/>    
+        <ion-icon class="time ion-text-right" name="checkmark"></ion-icon>
         <div class="time ion-text-right">
           {{message.created_at | date:'HH:mm'}}
         </div>
@@ -75,6 +77,12 @@
           <ion-img style="height:24px; width:24px;" src="https://custpostimages.s3.ap-south-1.amazonaws.com/sb_images/mobile_app_send_icon.png"></ion-img>
           </ion-button>
         </ion-col>
+        <!-- <ion-col size="2">
+          <ion-buttons slot="primary">
+            <ion-button color="danger" fill="outline" (click)="createPdf()">
+              View PDF
+            </ion-button>
+        </ion-col> -->
       </ion-row>
     </ion-grid>
   </form>

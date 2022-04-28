@@ -59,6 +59,8 @@ export class ChatmessengerPage implements OnInit {
   croppedImagepath = "";
   isLoading = false;
   title:string;
+  dataReader:any;
+  yourImageDataURL:any;
   imagePickerOptions = {
     maximumImagesCount: 1,
     quality: 50
@@ -82,6 +84,7 @@ export class ChatmessengerPage implements OnInit {
   private photoViewer: PhotoViewer,
   private backgroundMode: BackgroundMode) { }
   
+
   
   async getPicture() {
     const image = await Camera.getPhoto({
@@ -346,7 +349,6 @@ export class ChatmessengerPage implements OnInit {
       chatbot_id: this.selectedBot.id
     }
     console.log(obj);
-    // this.contentArea.scrollToBottom();
     console.log("time",obj.time);
     this.content.scrollToBottom();
     this.socketservice.sendMessage(obj);
@@ -358,7 +360,6 @@ export class ChatmessengerPage implements OnInit {
       message : newObj
     }
     this.socketservice.userSentMessage(msgObj);
-    // this.contentArea.scrollToBottom(500);
     if (this.chatUser.messages && this.chatUser.messages.length > 0) {
 
     }
@@ -376,13 +377,13 @@ export class ChatmessengerPage implements OnInit {
 
   userStartedTyping() {
     if(this.footerForm.value.inputText > 0){
-      console.log("user started typing method called");
+      console.log("User started typing method called");
       this.socket.on('admintyping',function(k){
         console.log(k);
       });
     }
     else{
-      console.log("user stopped typing method called");
+      console.log("User stopped typing method called");
       this.socket.on('admintypingstopped',function(l){
         console.log(l);
       });
