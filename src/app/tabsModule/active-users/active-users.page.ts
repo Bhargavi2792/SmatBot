@@ -244,7 +244,7 @@ export class ActiveUsersPage implements OnInit {
         }
       }
     });
-    this.apiservice.getresetUnreadCounter().then((response)=> {
+    this.apiservice.getresetUnreadCounter(new_user1.cb_session).then((response)=> {
       console.log(response);
       this.utils.hideLoader();
       if((response as any).errorStatus) {

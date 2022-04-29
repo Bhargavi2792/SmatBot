@@ -40,6 +40,8 @@ export class AppComponent {
   profilesendres: Array<ProfileSendRes>;
   pages :any;
   status :string;
+  full_name : string;
+  email : string;
   token :string;
 
 
@@ -63,6 +65,7 @@ export class AppComponent {
   initializeApp() {
     this.platform.ready().then(() => { 
       this.pages = [
+        // {name:localStorage.getItem("full_name")},
         {name:'Live Chat Status',icon:false,showToggle:true},
         {name:'Logout',icon:true,showToggle:false}
       ];
@@ -73,9 +76,13 @@ export class AppComponent {
       if(localStorage.getItem("isLoggedIn") === "true"){
         this.socket.startSocketConnection();
         this.status = localStorage.getItem("agent_status");
+        this.full_name = localStorage.getItem("agent_name");
+        this.email = localStorage.getItem("email");
         this.socket.setagentsession({agent_id:localStorage.getItem("agent_id"),
         agent_name:localStorage.getItem("agent_name"),
         agent_status:localStorage.getItem("agent_status"),
+        full_name:localStorage.getItem("full_name"),
+        email : localStorage.getItem("email"),
         token:localStorage.getItem("token")});
         this.route.navigate(['botslist']);
       }
@@ -128,6 +135,8 @@ export class AppComponent {
       this.utils.getagentStatusData().subscribe((data) => {
         console.log('Data received', data);
         this.status = data.agentStatus;
+        this.full_name = data.full_name;
+        this.email = data.email;
         this.setToggleStatus();
       });
     });
@@ -162,6 +171,8 @@ export class AppComponent {
               agent_name : response.data.agent_name,
               time : currentTime,
               status : response.data.status,
+              full_name : response.data.full_name,
+              email : response.data.email,
               assigned_sessions : response.data.assigned_sessions
             })
           }
@@ -244,7 +255,8 @@ export class AppComponent {
     this.utils.showconfirmationalert('Confirmation','Are you sure! You want to logout','Logout','Cancel').then(response => {
       if(response) {
         console.log("Ok button clicked");
-        localStorage.setItem("isLoggedIn","false");
+        localStorage.clear();
+        // localStorage.setItem("isLoggedIn","false");
         this.route.navigate(['login']);
       } else {
         console.log("Cancel button clicked");

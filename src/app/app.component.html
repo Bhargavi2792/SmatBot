@@ -2,10 +2,21 @@
   <ion-menu menuId="main-menu" content-id="main">
     <ion-header>
       <ion-toolbar>
-        <ion-title>
-          <ion-icon name="person-outline"></ion-icon>
-          <ion-label>{{full_name}}</ion-label>
-         </ion-title>
+        <!-- <ion-title> -->
+          <ion-avatar slot="start" style="position: center;">
+            <ion-icon name="person-outline"></ion-icon>
+          </ion-avatar>
+          <ion-label>
+            <ion-text color="dark">
+              <h2>{{agent_name}}</h2>
+            </ion-text>
+          </ion-label>
+          <ion-label>
+            <ion-text color="dark">
+              <p>{{email}}</p>
+            </ion-text>
+          </ion-label>
+         <!-- </ion-title> -->
       </ion-toolbar>
     </ion-header>
     <ion-content>
