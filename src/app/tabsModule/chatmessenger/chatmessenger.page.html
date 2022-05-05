@@ -14,12 +14,17 @@
     </ion-button>
   </ion-buttons>
   </ion-toolbar>
-  <ion-toolbar *ngIf="isstartedTyping" color="primary">
+  <ion-toolbar *ngIf="isstartedTyping ==='true'" color="primary">
     <ion-title size="small" style="position: start;color:#FFFFFF !important">typing...</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content #content>
+  <ion-row>
+    <ion-col *ngIf="isstartedTyping ==='true'" color="primary">
+      <ion-text size="small" style="position: start;color:blue !important">typing...</ion-text>
+    </ion-col>
+  </ion-row>
   <ion-row >
     <ion-col *ngIf="chatUser.messages == ''">
       <div class="ion-text-center">

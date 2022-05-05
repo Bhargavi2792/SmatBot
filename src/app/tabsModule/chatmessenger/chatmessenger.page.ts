@@ -26,9 +26,6 @@ import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-nati
 
 
 
-
-
-
 declare var window;
 @Component({
   selector: 'app-chatmessenger',
@@ -59,7 +56,7 @@ export class ChatmessengerPage implements OnInit {
   picImage;
   imagePath:SafeUrl;
   imgUrl: '';
-  isstartedTyping = false;
+  isstartedTyping = '';
   dateTime;
   croppedImagepath = "";
   isLoading = false;
@@ -74,14 +71,14 @@ export class ChatmessengerPage implements OnInit {
   };
   constructor(private formBuilder: FormBuilder,
   public utils:UtilsService,
+  public socketservice:SocketService,
+  public popoverController: PopoverController,
   private popover:PopoverController,
   private socket: Socket,
-  public socketservice:SocketService,
   private activepopup:PopoverController,
   private toastCtrl:ToastController,
   private _Activatedroute:ActivatedRoute,
   private route : Router,
-  public popoverController: PopoverController,
   private apiservice: ApiService,
   private actionSheetController: ActionSheetController,
   private sanitizer: DomSanitizer,
@@ -94,7 +91,6 @@ export class ChatmessengerPage implements OnInit {
   private transfer: FileTransfer,) { }
   
 
-  
   async getPicture() {
     const image = await Camera.getPhoto({
       quality: 100,
@@ -224,6 +220,18 @@ export class ChatmessengerPage implements OnInit {
       return false;
     }
   }
+
+  // isUrlAvbl(msg):boolean {
+  //   let msgs = msg.split("http || www");
+  //   let imgName = msgs[0];
+  //   let imgUrl = msgs[1];
+  //   if(imgName === '/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig'){
+  //     return true;
+  //   }
+  //   else{
+  //     return false;
+  //   }
+  // }
   
   getImgUrl(msg):boolean {
     let msgs = msg.split(";;");
@@ -263,12 +271,12 @@ export class ChatmessengerPage implements OnInit {
     this.socket.on('usertyping',function(n){
       console.log("User typing started");
       console.log(n);
-      this.isstartedTyping = true;
+      this.isstartedTyping === true;
     });
     this.socket.on('usertypingstopped',function(k){
       console.log("User typing stopped");
       console.log(k);
-      this.isstartedTyping = false;
+      this.isstartedTyping === false;
     });
     this.chatUser = this.utils.getchatUserResponse();
     this.selectedBot = this.utils.getselectedbotList();
@@ -292,7 +300,7 @@ export class ChatmessengerPage implements OnInit {
       let currentTime = new Date().toLocaleString();
       let msgObj = {
         text: m.message,
-        type:'customer',
+        type:'user',
         agent_name: global_scope.chatUser.agent_name,
         created_at : currentTime,
         bot_id:m.bot_id
@@ -390,20 +398,20 @@ export class ChatmessengerPage implements OnInit {
     console.log("time",obj.time);
     this.content.scrollToBottom();
     this.socketservice.sendMessage(obj);
-    // let msgObj = {
-    //   text: newObj,
-    //   type:'customer',
-    //   agent_name : chatUser.agent_name,
-    //   created_at :  currentTime,
-    //   message : newObj
-    // }
-    // this.socketservice.userSentMessage(msgObj);
-    // if (this.chatUser.messages && this.chatUser.messages.length > 0) {
+    let msgObj = {
+      text: newObj,
+      type:'customer',
+      agent_name : chatUser.agent_name,
+      created_at :  currentTime,
+      message : newObj
+    }
+    this.socketservice.userSentMessage(msgObj);
+    if (this.chatUser.messages && this.chatUser.messages.length > 0) {
 
-    // }
-    // else {
-    //   this.chatUser.messages = new Array<Messages>();
-    // }
+    }
+    else {
+      this.chatUser.messages = new Array<Messages>();
+    }
     // this.chatUser.messages.push(msgObj);
     // this.capturedImage = '';
     // this.contentArea.scrollToBottom();

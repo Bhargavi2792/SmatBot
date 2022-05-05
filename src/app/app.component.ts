@@ -12,22 +12,10 @@ import { BackgroundMode } from '@ionic-native/background-mode/ngx';
 import { Location } from '@angular/common';
 import { Capacitor } from '@capacitor/core';
 import { App } from '@capacitor/app';
+import {ActionPerformed,PushNotificationSchema,PushNotifications,Token,} from '@capacitor/push-notifications';
 
-
-
-// import { FCM } from "@capacitor-community/fcm";
-import {
-  ActionPerformed,
-  PushNotificationSchema,
-  PushNotifications,
-  Token,
-} from '@capacitor/push-notifications';
 
 const isPushNotificationsAvailable = Capacitor.isPluginAvailable('PushNotifications');
-// if (isPushNotificationsAvailable) {
-//   this.initPushNotifications();
-// }
-
 
 @Component({
   selector: 'app-root',
@@ -43,7 +31,6 @@ export class AppComponent {
   full_name : string;
   email : string;
   token :string;
-
 
   constructor(private platform: Platform,
   private splashScreen: SplashScreen,
@@ -65,7 +52,6 @@ export class AppComponent {
   initializeApp() {
     this.platform.ready().then(() => { 
       this.pages = [
-        // {name:localStorage.getItem("full_name")},
         {name:'Live Chat Status',icon:false,showToggle:true},
         {name:'Logout',icon:true,showToggle:false}
       ];
@@ -86,7 +72,6 @@ export class AppComponent {
         this.route.navigate(['botslist']);
       }
 
-
       PushNotifications.requestPermissions().then(result => {
         if (result.receive === 'granted') {
           // Register with Apple / Google to receive push via APNS/FCM
@@ -95,6 +80,7 @@ export class AppComponent {
 
         }
       });
+
       // On success, we should be able to receive notifications
       PushNotifications.addListener('registration',(devicetoken: Token) => {
         console.log('Token',devicetoken.value);
@@ -108,6 +94,7 @@ export class AppComponent {
         alert('Error on registration: ' + JSON.stringify(error));
       }
       );
+
       // Show us the notification payload if the app is open on our device
       PushNotifications.addListener('pushNotificationReceived',
       async (data: PushNotificationSchema) => {
@@ -137,7 +124,7 @@ export class AppComponent {
   }
   
   setToggleStatus():boolean{
-    if(this.status == 'online'){
+    if(this.status == 'online') {
       return true;
     } else {
       return false;
@@ -219,6 +206,7 @@ export class AppComponent {
       }
     });
   }
+  
   
   change(event){
     let currentTime = new Date();
