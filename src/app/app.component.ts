@@ -76,10 +76,9 @@ export class AppComponent {
       if(localStorage.getItem("isLoggedIn") === "true"){
         this.socket.startSocketConnection();
         this.status = localStorage.getItem("agent_status");
-        this.full_name = localStorage.getItem("agent_name");
+        this.full_name = localStorage.getItem("full_name");
         this.email = localStorage.getItem("email");
         this.socket.setagentsession({agent_id:localStorage.getItem("agent_id"),
-        agent_name:localStorage.getItem("agent_name"),
         agent_status:localStorage.getItem("agent_status"),
         full_name:localStorage.getItem("full_name"),
         email : localStorage.getItem("email"),
@@ -93,19 +92,16 @@ export class AppComponent {
           // Register with Apple / Google to receive push via APNS/FCM
           PushNotifications.register();
         } else {
-          // Show some error
+
         }
       });
       // On success, we should be able to receive notifications
       PushNotifications.addListener('registration',(devicetoken: Token) => {
-        // alert('Push registration success, token: ' + token.value);
         console.log('Token',devicetoken.value);
         this.socket.senddevicetoken({agent_id:localStorage.getItem("agent_id"),
       devicetoken:devicetoken.value});
       localStorage.setItem("devicetoken",devicetoken.value);
-
-      }
-      );
+      });
       
       // Some issue with our setup and push will not work
       PushNotifications.addListener('registrationError',(error: any) => {
@@ -115,9 +111,7 @@ export class AppComponent {
       // Show us the notification payload if the app is open on our device
       PushNotifications.addListener('pushNotificationReceived',
       async (data: PushNotificationSchema) => {
-        // alert('Push received: ' + JSON.stringify(notification));
         console.log('Push received: ' + JSON.stringify(data));
-        
       }
       );
       
@@ -127,7 +121,7 @@ export class AppComponent {
         const data = notification.notification.data;
         console.log('Push action performed: ' + JSON.stringify(notification.notification));
         if(data.detailsId){
-          this.route.navigateByUrl(`/home/${data.detailsId}`);
+          this.route.navigateByUrl('/login/${data.detailsId}');
         }
       }
       );
@@ -181,45 +175,7 @@ export class AppComponent {
     });
   }
   
-  // backBtnAction(){
-  //   this.platform.backButton.subscribeWithPriority(999999,async() => {
-  //     if(this.popover.getTop()){
-  //       const pop = await this.popover.getTop();
-  //       console.log(pop);
-  //       if(pop){
-  //         this.popover.dismiss();
-  //         return;
-  //       }else{
-  //         const url = this.route.url;
-  //         console.log("url",url);
-  //         if (url === '/botslist') {
-  //           navigator['app'].exitApp();
-  //         } else 
-  //         if (url === '/login') {
-  //           navigator["app"].exitApp();
-  //         } else if (url === '/tabs/tabs/active-users') {
-  //           this.route.navigate(['botslist']);
-  //         } else if (url === '/tabs/tabs/closed-users') {
-  //           this.route.navigate(['botslist']);
-  //         } else if (url === '/chatmessenger;isfrmclosedchat=false'){
-  //           this.route.navigate(['/tabs/tabs/active-users']);
-  //         } else if (url === '/chatmessenger;isfrmclosedchat=true'){
-  //           this.route.navigate(['/tabs/tabs/closed-users']);
-  //         }
-  //         else{
-  //           this.navController.pop();
-  //         }
-  //       }
-  //     }else{
-  //       const url = this.route.url;
-  //       if(url ==='/botlist'){
-  //         navigator['app'].exitApp();
-  //       }else{
-  //         this.navController.pop();
-  //       }
-  //     }
-  //   });
-  // }
+  
   backBtnAction(){
     this.platform.backButton.subscribeWithPriority(10,(processNextHandler) => {
       const url = this.route.url;
@@ -239,7 +195,7 @@ export class AppComponent {
         this.route.navigate(['/tabs/tabs/closed-users']);
       }
       else{
-        // this.navController.back();
+
       }
     });
   }

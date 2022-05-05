@@ -276,5 +276,31 @@ export class ApiService {
       });
     });
   }
+
+
+  getUploadFile(request):Promise<any> {
+    let httpImageUpload = {
+      headers : new HttpHeaders({
+        'Content-Type':'application/x-www-form-urlencoded'
+      })
+    }
+    let body = "data=" +request.data + "&file_name=" + request.file_name +"&profile_id=" + request.profile_id;
+    return new Promise(resolve =>{
+      this.http.post('https://www.app.feltso.com/kya_backend/Api/uploadImageFile',body,httpImageUpload).subscribe(response => {
+        console.log("Response",response);
+        let responseInfo: any = {};
+        responseInfo.errorStatus = false;
+        responseInfo.data = response;
+        resolve(responseInfo);
+      },error => {
+        console.log("Response error",error);
+        console.log("Response error",error.status);
+        let responseInfo: any = {};
+        responseInfo.errorStatus = true;
+        responseInfo.data = error;
+        resolve(responseInfo);
+      });
+    });
+  }
 }
  

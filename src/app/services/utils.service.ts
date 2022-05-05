@@ -118,7 +118,7 @@ export class UtilsService {
   
   setagentStatusData(data: any) {
     this.agentStatus.next(data);
-    
+    console.log("agent status",data);
   }
   
   getagentStatusData(): Subject<any> {

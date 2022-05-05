@@ -92,7 +92,7 @@ export class LoginPage implements OnInit {
         request.action = 'read';
         this.apiservice.getProfileService(request).then((response) => {
           console.log(response);
-          localStorage.setItem("response",response);
+          localStorage.setItem("response",response.data);
           this.utils.hideLoader();
           if((response as any).errorStatus) {
             console.log("Failure response in login page",response);
@@ -102,16 +102,8 @@ export class LoginPage implements OnInit {
             agent_name: response.data.full_name,
             agent_status:(response as any).data.agent_status,
             token:(response as any).data.AuthToken});
-            this.utils.setagentStatusData({
-              agentStatus: (response as any).data.agent_status
-            });
-
-            console.log("agent_id",(response as any).data.agent_id);
-            console.log("agent_name",(response as any).data.full_name);
-            console.log("agent_status",(response as any).data.agent_status);
-            console.log("email",(response as any).data.email);
             localStorage.setItem("agent_id",(response as any).data.agent_id);
-            localStorage.setItem("agent_name",(response as any).data.full_name);
+            localStorage.setItem("full_name",(response as any).data.full_name);
             localStorage.setItem("agent_status",(response as any).data.agent_status);
             localStorage.setItem("email",(response as any).data.email);
             localStorage.setItem("isLoggedIn","true");

@@ -21,6 +21,11 @@ import { Storage} from '@ionic/storage';
 import { BackgroundMode } from '@ionic-native/background-mode/ngx';
 import { Capacitor } from '@capacitor/core';
 import { PhotoViewer,PhotoViewerOptions } from '@ionic-native/photo-viewer/ngx';
+import { File } from '@ionic-native/file/ngx';
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
+
+
+
 
 
 
@@ -61,6 +66,8 @@ export class ChatmessengerPage implements OnInit {
   title:string;
   dataReader:any;
   yourImageDataURL:any;
+  imageURI: any;
+  imageFileName: any;
   imagePickerOptions = {
     maximumImagesCount: 1,
     quality: 50
@@ -82,7 +89,9 @@ export class ChatmessengerPage implements OnInit {
   private platform: Platform,
   private storge: Storage,
   private photoViewer: PhotoViewer,
-  private backgroundMode: BackgroundMode) { }
+  private backgroundMode: BackgroundMode,
+  private file: File,
+  private transfer: FileTransfer,) { }
   
 
   
@@ -119,6 +128,33 @@ export class ChatmessengerPage implements OnInit {
     });
   }
   
+  //  async uploadFile() {
+  //   const fileTransfer: FileTransferObject = this.transfer.create();
+  //   let options: FileUploadOptions = {
+  //     fileKey: 'file',
+  //     fileName: 'ionicfile',
+  //     chunkedMode: false,
+  //     mimeType: "image/jpeg",
+  //     headers: {}
+  //   }
+    // fileTransfer.upload(this.imageURI, 'http://localhost/engace/api/api.php', options).then((data) => {
+    //   console.log(data + " Uploaded Successfully");
+    //   this.imageFileName = "http://192.168.0.7:8080/static/images/ionicfile.jpg"
+    // }, (err) => {
+    //   console.log(err);
+    // });
+  // }
+
+  public download(fileName, filePath) {
+    let url = encodeURI(filePath);
+    const fileTransfer: FileTransferObject = this.transfer.create();
+    console.log(url);
+    fileTransfer.download(url, this.file.externalRootDirectory + fileName, true).then((entry) => {
+      console.log('download completed: ' + entry.toURL());
+    }, (error) => {
+      console.log('download failed: ' + error);
+    });
+  }
   
   onFileChoose(event: Event) {
     const file = (event.target as HTMLInputElement).files[0];
@@ -134,6 +170,7 @@ export class ChatmessengerPage implements OnInit {
     reader.readAsDataURL(file);
   }
   
+
   async selectImage() {
     const actionSheet = await this.actionSheetController.create({
       header: "Select Image source",
@@ -224,10 +261,12 @@ export class ChatmessengerPage implements OnInit {
   ngOnInit() {
     this.socket.removeAllListeners();
     this.socket.on('usertyping',function(n){
+      console.log("User typing started");
       console.log(n);
       this.isstartedTyping = true;
     });
     this.socket.on('usertypingstopped',function(k){
+      console.log("User typing stopped");
       console.log(k);
       this.isstartedTyping = false;
     });
@@ -253,7 +292,7 @@ export class ChatmessengerPage implements OnInit {
       let currentTime = new Date().toLocaleString();
       let msgObj = {
         text: m.message,
-        type:'user',
+        type:'customer',
         agent_name: global_scope.chatUser.agent_name,
         created_at : currentTime,
         bot_id:m.bot_id
@@ -265,7 +304,6 @@ export class ChatmessengerPage implements OnInit {
         global_scope.chatUser.messages = new Array<Messages>();
       }
       global_scope.chatUser.messages.push(msgObj);
-      // this.contentArea.scrollToBottom(500);
       console.log("MSG Object",msgObj);
     });
     this.socket.on('closesession', function(n){
@@ -352,21 +390,21 @@ export class ChatmessengerPage implements OnInit {
     console.log("time",obj.time);
     this.content.scrollToBottom();
     this.socketservice.sendMessage(obj);
-    let msgObj = {
-      text: newObj,
-      type:'customer',
-      agent_name : chatUser.agent_name,
-      created_at :  currentTime,
-      message : newObj
-    }
-    this.socketservice.userSentMessage(msgObj);
-    if (this.chatUser.messages && this.chatUser.messages.length > 0) {
+    // let msgObj = {
+    //   text: newObj,
+    //   type:'customer',
+    //   agent_name : chatUser.agent_name,
+    //   created_at :  currentTime,
+    //   message : newObj
+    // }
+    // this.socketservice.userSentMessage(msgObj);
+    // if (this.chatUser.messages && this.chatUser.messages.length > 0) {
 
-    }
-    else {
-      this.chatUser.messages = new Array<Messages>();
-    }
-    this.chatUser.messages.push(msgObj);
+    // }
+    // else {
+    //   this.chatUser.messages = new Array<Messages>();
+    // }
+    // this.chatUser.messages.push(msgObj);
     // this.capturedImage = '';
     // this.contentArea.scrollToBottom();
     console.log("Chat user messages",this.chatUser.messages);
@@ -374,16 +412,15 @@ export class ChatmessengerPage implements OnInit {
     this.photo = '';
   }
 
-
   userStartedTyping() {
     if(this.footerForm.value.inputText > 0){
-      console.log("User started typing method called");
+      console.log("Admin started typing method called");
       this.socket.on('admintyping',function(k){
         console.log(k);
       });
     }
     else{
-      console.log("User stopped typing method called");
+      console.log("Admin stopped typing method called");
       this.socket.on('admintypingstopped',function(l){
         console.log(l);
       });

@@ -34,15 +34,14 @@
     <ion-row *ngFor="let message of chatUser.messages">
       <ion-col size="8"  *ngIf="message.type ==='user'" class="message other-message" text-left style="height:fit-content">
         <div *ngIf="!isImgAvbl(message.text)" class="item item-text-wrap" [innerHtml]="message.text" ></div>
-        <img *ngIf="isImgAvbl(message.text)" src= "{{getImgUrl(message.text)}}" (click)="clickImage(getImgUrl(message.text))">
+        <img *ngIf="isImgAvbl(message.text)" src= "{{getImgUrl(message.text)}}">
         <div class="time ion-text-right">
           {{message.created_at | date:'HH:mm'}}
         </div>
       </ion-col>
       <ion-col offset="4" size="8"  *ngIf="message.type ==='customer'"  class="message my-message" text-right  style="height:fit-content;padding-right: 10px !important;">
         <div *ngIf="!isCustomerImgAvbl(message.text)" [innerHtml]="message.text"></div>
-        <!-- <div *ngIf="!isCustomerImgAvbl(message.text) || message.text ===''" [innerHtml]="message.text">Message cannot be empty</div> -->
-        <img *ngIf="isCustomerImgAvbl(message.text)" src = "{{setmsgText(message.text)}}" height="200" width="200" (click)="clickImage(setmsgText(message.text))"/>    
+        <img *ngIf="isCustomerImgAvbl(message.text)" src = "{{setmsgText(message.text)}}" height="200" width="200" >    
         <ion-icon class="time ion-text-right" name="checkmark"></ion-icon>
         <div class="time ion-text-right">
           {{message.created_at | date:'HH:mm'}}
@@ -70,8 +69,8 @@
             <ion-img style="height:24px; width:24px;" src="https://custpostimages.s3.ap-south-1.amazonaws.com/sb_images/mobile_app_attached_icon.png"></ion-img>
           </ion-button>
         </ion-col>
-        <ion-col size="2" >
-          <ion-button   type="submit"  
+        <ion-col size="2">
+          <ion-button  type="submit"  
           fill="clear"
           (mousedown)="sendMessageBtnAction(); $event.preventDefault()">
           <ion-img style="height:24px; width:24px;" src="https://custpostimages.s3.ap-south-1.amazonaws.com/sb_images/mobile_app_send_icon.png"></ion-img>

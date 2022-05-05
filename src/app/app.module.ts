@@ -21,7 +21,10 @@ import { Camera, CameraResultType } from '@capacitor/camera';
 import { Capacitor } from '@capacitor/core';
 import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
 import { FileChooser } from '@ionic-native/file-chooser/ngx';
-import {Base64} from "@ionic-native/base64/ngx";
+import { Base64 } from "@ionic-native/base64/ngx";
+import { File } from '@ionic-native/file/ngx';
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
+
 
 
 
@@ -55,7 +58,9 @@ const config: SocketIoConfig = { url: 'https://www.smatbot.com:8007', options: {
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     PhotoViewer,
     FileChooser,
-    Base64
+    Base64,
+    File,
+    FileTransfer
 
   ],
   bootstrap: [AppComponent],

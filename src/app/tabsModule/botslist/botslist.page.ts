@@ -26,6 +26,12 @@ export class BotslistPage implements OnInit {
   }
   
   ngOnInit() {
+    this.socketservice.startSocketConnection();
+    this.utils.setagentStatusData({
+      agentStatus: localStorage.getItem("agent_status"),
+      full_name : localStorage.getItem("full_name"),
+      email : localStorage.getItem("email") 
+    });
     this.getChatbots(null);
     this.title = 'Bot List';
   }

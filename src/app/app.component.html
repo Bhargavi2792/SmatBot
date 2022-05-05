@@ -3,12 +3,13 @@
     <ion-header>
       <ion-toolbar>
         <!-- <ion-title> -->
-          <ion-avatar slot="start" style="position: center;">
-            <ion-icon name="person-outline"></ion-icon>
-          </ion-avatar>
-          <ion-label>
-            <ion-text color="dark">
-              <h2>{{agent_name}}</h2>
+          <!-- <ion-avatar slot="start" style="position: center;">
+            <ion-icon name="person-outline" style="position: center;"></ion-icon>
+          </ion-avatar> -->
+          <ion-grid>
+          <ion-label style="padding-left: 30% !important;">
+            <ion-text color="dark" style="padding-left:30% !important">
+              <h2>{{full_name}}</h2>
             </ion-text>
           </ion-label>
           <ion-label>
@@ -16,7 +17,7 @@
               <p>{{email}}</p>
             </ion-text>
           </ion-label>
-         <!-- </ion-title> -->
+        </ion-grid>
       </ion-toolbar>
     </ion-header>
     <ion-content>
