@@ -19,7 +19,7 @@ export class ApiService {
       })
     }
     return new Promise(resolve =>{
-      this.http.post('https://www.app.feltso.com/kya_backend/app/login',request,httpOptions).subscribe(response => {
+      this.http.post('https://www.app.smatbot.com/kya_backend/app/login',request,httpOptions).subscribe(response => {
         console.log("Response",response);
         let responseInfo: any = {};
         responseInfo.errorStatus = false;
@@ -45,7 +45,7 @@ export class ApiService {
       })
     }
     return new Promise(resolve =>{
-      this.http.get('https://www.app.feltso.com/kya_backend/settings/getChatbots',httpBotlist).subscribe(response => {
+      this.http.get('https://www.app.smatbot.com/kya_backend/settings/getChatbots',httpBotlist).subscribe(response => {
         console.log("Response",response);
         let responseInfo: any = {};
         responseInfo.errorStatus = false;
@@ -73,7 +73,7 @@ export class ApiService {
       })
     }
     return new Promise(resolve =>{
-      this.http.post('https://www.app.feltso.com/kya_backend/livechat/getLivechatSession',request,httpLiveChatlist).subscribe(response => {
+      this.http.post('https://www.app.smatbot.com/kya_backend/livechat/getLivechatSession',request,httpLiveChatlist).subscribe(response => {
         console.log("Response",response);
         let responseInfo: any = {};
         responseInfo.errorStatus = false;
@@ -100,7 +100,7 @@ export class ApiService {
       })
     }
     return new Promise(resolve =>{
-      this.http.post('https://www.app.feltso.com/kya_backend/app/profileService',request,httpProfileService).subscribe(response => {
+      this.http.post('https://www.app.smatbot.com/kya_backend/app/profileService',request,httpProfileService).subscribe(response => {
         console.log("Response",response);
         let responseInfo: any = {};
         responseInfo.errorStatus = false;
@@ -125,9 +125,9 @@ export class ApiService {
         'Authorization': localStorage.getItem('token')
      })
     }
-    console.log("URL",'https://www.app.feltso.com/kya_backend/livechat/getChatdata?cb_session='+ sessionId + '&chatbot_id=' + chatbotId + '&channel=' + channel);
+    console.log("URL",'https://www.app.smatbot.com/kya_backend/livechat/getChatdata?cb_session='+ sessionId + '&chatbot_id=' + chatbotId + '&channel=' + channel);
     return new Promise(resolve =>{
-      this.http.get('https://www.app.feltso.com/kya_backend/livechat/getChatdata?cb_session='+ sessionId + '&chatbot_id=' + chatbotId + '&channel=' + channel,httpChatData).subscribe(response => {
+      this.http.get('https://www.app.smatbot.com/kya_backend/livechat/getChatdata?cb_session='+ sessionId + '&chatbot_id=' + chatbotId + '&channel=' + channel,httpChatData).subscribe(response => {
         let responseInfo: any = {};
         responseInfo.errorStatus = false;
         responseInfo.data = response;
@@ -154,7 +154,7 @@ export class ApiService {
       })
     }
     return new Promise(resolve =>{
-      this.http.post('https://www.app.feltso.com/kya_backend/livechat/setStatus',request,httpSetStatus).subscribe(response => {
+      this.http.post('https://www.app.smatbot.com/kya_backend/livechat/setStatus',request,httpSetStatus).subscribe(response => {
         console.log("Response",response);
         let responseInfo: any = {};
         responseInfo.errorStatus = false;
@@ -180,7 +180,7 @@ export class ApiService {
      })
     }
     return new Promise(resolve =>{
-      this.http.get('https://www.app.feltso.com/kya_backend/livechat/getAssignedSessions ',httpgetAssignedSessions).subscribe(response => {
+      this.http.get('https://www.app.smatbot.com/kya_backend/livechat/getAssignedSessions ',httpgetAssignedSessions).subscribe(response => {
         console.log("Response",response);
         let responseInfo: any = {};
         responseInfo.errorStatus = false;
@@ -206,7 +206,7 @@ export class ApiService {
       })
     }
     return new Promise(resolve =>{
-      this.http.get('https://www.app.feltso.com/kya_backend/livechat/getAgentsStatus',httpAgentStatus).subscribe(response => {
+      this.http.get('https://www.app.smatbot.com/kya_backend/livechat/getAgentsStatus',httpAgentStatus).subscribe(response => {
         console.log("Response",response);
         let responseInfo: any = {};
         responseInfo.errorStatus = false;
@@ -234,7 +234,7 @@ export class ApiService {
     }
     let body = "data=" +request.data + "&file_name=" + request.file_name +"&profile_id=" + request.profile_id;
     return new Promise(resolve =>{
-      this.http.post('https://www.feltso.com/kya_backend/Api/uploadImageFile',body,httpImageUpload).subscribe(response => {
+      this.http.post('https://www.app.smatbot.com/kya_backend/Api/uploadCPImage',body,httpImageUpload).subscribe(response => {
         console.log("Response",response);
         let responseInfo: any = {};
         responseInfo.errorStatus = false;
@@ -252,6 +252,7 @@ export class ApiService {
   }
 
 
+  ///*** Method to ResetUnreadMessages ***///
   getresetUnreadCounter(request:string):Promise<any> {
     let httpUnreadCounter = {
       headers : new HttpHeaders({
@@ -260,7 +261,7 @@ export class ApiService {
         'Accept':'application/json'      })
     }
     return new Promise(resolve =>{
-      this.http.post('https://www.app.feltso.com/kya_backend/livechat/resetUnreadCounter',request,httpUnreadCounter).subscribe(response => {
+      this.http.post('https://www.app.smatbot.com/kya_backend/livechat/resetUnreadCounter',request,httpUnreadCounter).subscribe(response => {
         console.log("Response",response);
         let responseInfo: any = {};
         responseInfo.errorStatus = false;
@@ -278,6 +279,7 @@ export class ApiService {
   }
 
 
+  ///*** Method to GetUploadFiles ***///
   getUploadFile(request):Promise<any> {
     let httpImageUpload = {
       headers : new HttpHeaders({
@@ -286,7 +288,7 @@ export class ApiService {
     }
     let body = "data=" +request.data + "&file_name=" + request.file_name +"&profile_id=" + request.profile_id;
     return new Promise(resolve =>{
-      this.http.post('https://www.app.feltso.com/kya_backend/Api/uploadImageFile',body,httpImageUpload).subscribe(response => {
+      this.http.post('https://www.app.smatbot.com/kya_backend/Api/uploadImageFile',body,httpImageUpload).subscribe(response => {
         console.log("Response",response);
         let responseInfo: any = {};
         responseInfo.errorStatus = false;

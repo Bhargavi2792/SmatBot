@@ -29,7 +29,7 @@ import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-nati
 
 
 
-const config: SocketIoConfig = { url: 'https://www.smatbot.com:8007', options: {} };
+const config: SocketIoConfig = { url: 'https://www.smatbot.com:8000', options: {} };
 
 @NgModule({
   declarations: [AppComponent],

@@ -6,8 +6,8 @@ import { ChatUsersResponse } from '../../Model/chatusersresponse';
 import { Router,ActivatedRoute } from '@angular/router';
 import { Socket } from 'ngx-socket-io';
 import { ActivepopupPage } from '../../activepopup/activepopup.page';
-import { IonContent, IonInfiniteScrollContent, PopoverController,ModalController,Platform,NavController} from '@ionic/angular';
-import { ChatmessengerPage} from '../chatmessenger/chatmessenger.page';
+import { IonContent, IonInfiniteScrollContent, PopoverController,ModalController,Platform,NavController } from '@ionic/angular';
+import { ChatmessengerPage } from '../chatmessenger/chatmessenger.page';
 import { ProfileSendRes } from '../../Model/profilesendres';
 
 
@@ -24,6 +24,7 @@ export class ActiveUsersPage implements OnInit {
   selectedBot:BotList;
   activeUsersList:Array<ChatUsersResponse>;
   filterItem: string; 
+  unreadMsgsCount: boolean;
   showMsg = true;
   constructor(private apiservice : ApiService,
   private platform:Platform,
@@ -102,7 +103,6 @@ export class ActiveUsersPage implements OnInit {
     this.activeUsersList.push(new_user);
     console.log("after inserting",this.activeUsersList);
   }
-  
  
   closeChat(new_user){
     console.log("activeuserslist before",this.activeUsersList);
@@ -254,6 +254,9 @@ export class ActiveUsersPage implements OnInit {
         this.utils.showalert('Error','Something went wrong please try again after sometime','Ok');
       } else {
         console.log("Success response in Reset Unread messages",(response as any).data);
+        if(new_user1.unreadMsgs > 0){
+          this.unreadMsgsCount == true;
+        }
       }
     })
   }

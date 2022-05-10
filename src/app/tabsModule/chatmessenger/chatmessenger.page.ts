@@ -1,29 +1,28 @@
 import { Component, OnInit,ElementRef, ViewChild } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder,Validators,FormArray,FormArrayName,ValidationErrors}  from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder,Validators,FormArray,FormArrayName,ValidationErrors }  from '@angular/forms';
 import { ChatUsersResponse } from '../../Model/chatusersresponse';
 import { UtilsService } from '../../services/utils.service';
-import { IonContent, IonInfiniteScrollContent, PopoverController,Platform,ActionSheetController,IonBadge} from '@ionic/angular';
+import { IonContent, IonInfiniteScrollContent, PopoverController,Platform,ActionSheetController,IonBadge } from '@ionic/angular';
 import { Socket } from 'ngx-socket-io';
-import {PopovercomponentPage } from '../../popovercomponent/popovercomponent.page';
+import { PopovercomponentPage } from '../../popovercomponent/popovercomponent.page';
 import { ToastController } from '@ionic/angular';
-import { SocketService} from '../../services/socket.service';
+import { SocketService } from '../../services/socket.service';
 import { BotList } from 'src/app/Model/botList';
-import { Messages} from '../../Model/messages';
-import {ActivepopupPage } from '../../activepopup/activepopup.page';
-import {Router,ActivatedRoute} from '@angular/router';
+import { Messages } from '../../Model/messages';
+import { ActivepopupPage } from '../../activepopup/activepopup.page';
+import { Router,ActivatedRoute } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { ApiService } from 'src/app/services/api.service';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
 import { ImageUpload } from 'src/app/Model/imageupload';
 import { HttpClient, HttpHeaders, HttpErrorResponse, HttpHeaderResponse, HttpRequest } from '@angular/common/http';
-import { Storage} from '@ionic/storage';
+import { Storage } from '@ionic/storage';
 import { BackgroundMode } from '@ionic-native/background-mode/ngx';
 import { Capacitor } from '@capacitor/core';
 import { PhotoViewer,PhotoViewerOptions } from '@ionic-native/photo-viewer/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
-
 
 
 declare var window;
@@ -56,7 +55,7 @@ export class ChatmessengerPage implements OnInit {
   picImage;
   imagePath:SafeUrl;
   imgUrl: '';
-  isstartedTyping = '';
+  isstartedTyping: boolean;
   dateTime;
   croppedImagepath = "";
   isLoading = false;
@@ -124,6 +123,22 @@ export class ChatmessengerPage implements OnInit {
     });
   }
   
+  async uploadFile(){
+    const fileTransfer: FileTransferObject = this.transfer.create();
+    let options: FileUploadOptions = {
+      fileKey: 'file',
+      fileName: 'ionicfile',
+      chunkedMode: false,
+      mimeType : "file",
+      headers: {}
+    }
+    fileTransfer.upload(this.imageURI, 'http://localhost/engace/api/api.php', options).then((data) => {
+      console.log(data + " Uploaded Successfully");
+      this.imageFileName = "http://192.168.0.7:8080/static/images/ionicfile.jpg"
+    }, (err) => {
+      console.log(err);
+    });
+  }
   //  async uploadFile() {
   //   const fileTransfer: FileTransferObject = this.transfer.create();
   //   let options: FileUploadOptions = {
@@ -221,17 +236,17 @@ export class ChatmessengerPage implements OnInit {
     }
   }
 
-  // isUrlAvbl(msg):boolean {
-  //   let msgs = msg.split("http || www");
-  //   let imgName = msgs[0];
-  //   let imgUrl = msgs[1];
-  //   if(imgName === '/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig'){
-  //     return true;
-  //   }
-  //   else{
-  //     return false;
-  //   }
-  // }
+  isUrlAvbl(msg):boolean {
+    let msgs = msg.split("http || www");
+    let imgName = msgs[0];
+    let imgUrl = msgs[1];
+    if(imgName === '/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g'){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
   
   getImgUrl(msg):boolean {
     let msgs = msg.split(";;");
@@ -405,20 +420,20 @@ export class ChatmessengerPage implements OnInit {
       created_at :  currentTime,
       message : newObj
     }
-    this.socketservice.userSentMessage(msgObj);
+    // this.socketservice.userSentMessage(msgObj);
     if (this.chatUser.messages && this.chatUser.messages.length > 0) {
-
     }
     else {
       this.chatUser.messages = new Array<Messages>();
     }
-    // this.chatUser.messages.push(msgObj);
+    this.chatUser.messages.push(msgObj);
     // this.capturedImage = '';
     // this.contentArea.scrollToBottom();
     console.log("Chat user messages",this.chatUser.messages);
     this.content.scrollToBottom(500);
     this.photo = '';
   }
+
 
   userStartedTyping() {
     if(this.footerForm.value.inputText > 0){

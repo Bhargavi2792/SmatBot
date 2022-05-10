@@ -46,7 +46,10 @@
       </ion-col>
       <ion-col offset="4" size="8"  *ngIf="message.type ==='customer'"  class="message my-message" text-right  style="height:fit-content;padding-right: 10px !important;">
         <div *ngIf="!isCustomerImgAvbl(message.text)" [innerHtml]="message.text"></div>
-        <img *ngIf="isCustomerImgAvbl(message.text)" src = "{{setmsgText(message.text)}}" height="200" width="200" >    
+        <img *ngIf="isCustomerImgAvbl(message.text)" src = "{{setmsgText(message.text)}}" height="200" width="200" >  
+        <div *ngIf="isUrlAvbl(message.text)">
+          <a [href]="message.text"></a>
+        </div>  
         <ion-icon class="time ion-text-right" name="checkmark"></ion-icon>
         <div class="time ion-text-right">
           {{message.created_at | date:'HH:mm'}}

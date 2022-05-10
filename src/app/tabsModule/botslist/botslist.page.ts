@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild,OnDestroy,AfterViewInit } from '@angular/core';
-import {ApiService} from '../../services/api.service';
+import { ApiService } from '../../services/api.service';
 import { Router } from '@angular/router';
-import { BotList} from '../../Model/botList';
-import { UtilsService} from '../../services/utils.service';
-import { IonSearchbar} from '@ionic/angular';
-import {SocketService}  from '../../services/socket.service';
+import { BotList } from '../../Model/botList';
+import { UtilsService } from '../../services/utils.service';
+import { IonSearchbar } from '@ionic/angular';
+import { SocketService }  from '../../services/socket.service';
 import { Socket } from 'ngx-socket-io';
 
 

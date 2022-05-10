@@ -5,7 +5,7 @@
   <ion-refresher slot="fixed" (ionRefresh)="getChatbots($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-    <ion-searchbar placeholder="Search" [(ngModel)]="filterItem" animated="true" ></ion-searchbar>
+  <ion-searchbar placeholder="Search" [(ngModel)]="filterItem" animated="true" ></ion-searchbar>
   <ion-grid *ngFor="let item of chatbots | filter:filterItem"  style="color:#FFFFFF" >
     <ion-item button (click)="botButtonClicked(item)" detail="false" lines="none">
       <ion-avatar slot="start" style="position: center;">

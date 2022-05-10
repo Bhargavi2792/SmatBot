@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
-import  {UtilsService} from '../services/utils.service';
-import {ApiService} from '../services/api.service';
+import { UtilsService } from '../services/utils.service';
+import { ApiService } from '../services/api.service';
 import { AssignAgent } from '../Model/assignagent';
 
 
@@ -16,12 +16,12 @@ export class AssignagentpopupPage implements OnInit {
   constructor( private activepopup:PopoverController,
   public utilservice :UtilsService,private apiservice : ApiService) { 
     this.assignAgents = [];
-    }
-
-    async CloseActivepopup(new_user:any,type:string) {
-      await this.activepopup.dismiss(new_user,type);
-    }
-
+  }
+  
+  async CloseActivepopup(new_user:any,type:string) {
+    await this.activepopup.dismiss(new_user,type);
+  }
+  
   ngOnInit() {
 
   }
@@ -43,5 +43,4 @@ export class AssignagentpopupPage implements OnInit {
     })
     this.CloseActivepopup('','AssignAgent');
   }
-
 }

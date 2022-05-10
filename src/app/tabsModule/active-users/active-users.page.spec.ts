@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
-
 import { ActiveUsersPage } from './active-users.page';
 
 describe('ActiveUsersPage', () => {

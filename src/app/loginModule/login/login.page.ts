@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ApiService} from '../../services/api.service';
-import { UtilsService} from '../../services/utils.service';
-import { LoginRequest} from '../../Model/loginrequest';
+import { ApiService } from '../../services/api.service';
+import { UtilsService } from '../../services/utils.service';
+import { LoginRequest } from '../../Model/loginrequest';
 import { FormGroup, FormControl, FormBuilder, Validators  }  from '@angular/forms';
 import { HttpClient, HttpHeaders, HttpErrorResponse, HttpHeaderResponse } from '@angular/common/http';
-import {SocketService}  from '../../services/socket.service';
+import { SocketService }  from '../../services/socket.service';
 import { ProfileSendRes } from 'src/app/Model/profilesendres';
 import { Platform,ActionSheetController } from '@ionic/angular';
 
@@ -37,19 +37,15 @@ export class LoginPage implements OnInit {
   private platform:Platform,
   public actionSheetController: ActionSheetController
   ) { }
-  
-  
 
   ngOnInit() {
     this.setFormValidations();
   }
 
-
   hideShowPassword() {
     this.showPassword = !this.showPassword;
   }
   
-
   setFormValidations(){
     this.loginForm = this._formBuilder.group({
       userNameField: ["", Validators.required],
