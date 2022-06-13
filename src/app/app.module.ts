@@ -10,11 +10,11 @@ import { RecaptchaComponent, RECAPTCHA_SETTINGS, RecaptchaSettings, RecaptchaMod
 import { CommonModule } from '@angular/common';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { HttpClientModule } from '@angular/common/http';
-import {ApiService} from './services/api.service';
+import { ApiService } from './services/api.service';
 import { IonicStorageModule } from '@ionic/storage-angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ComponentsModule } from './components/components.module';
-import {PopovercomponentPageModule} from './popovercomponent/popovercomponent.module';
+import { PopovercomponentPageModule } from './popovercomponent/popovercomponent.module';
 import { BackgroundMode } from '@ionic-native/background-mode/ngx';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { Camera, CameraResultType } from '@capacitor/camera';
@@ -24,8 +24,6 @@ import { FileChooser } from '@ionic-native/file-chooser/ngx';
 import { Base64 } from "@ionic-native/base64/ngx";
 import { File } from '@ionic-native/file/ngx';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
-
-
 
 
 

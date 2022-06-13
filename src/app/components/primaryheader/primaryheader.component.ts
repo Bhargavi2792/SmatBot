@@ -32,6 +32,7 @@ export class PrimaryheaderComponent implements OnInit {
     });
   }
 
+  
   backbtnAction() {
     this.route.navigate(['botslist']);
   }

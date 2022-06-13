@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
   templateUrl: './closed-users.page.html',
   styleUrls: ['./closed-users.page.scss'],
 })
-export class ClosedUsersPage implements OnInit {
+export class ClosedUsersPage  {
   filterItem: string; 
   selectedBot: BotList;
   indexValue='0';
@@ -46,7 +46,6 @@ export class ClosedUsersPage implements OnInit {
 
   ///*** Method to get active chat users ***///
   getClosedChatUsers(index:string){
-    // this.utils.showLoader("Please wait while we fetch your closed chat users list...");
     let body = new URLSearchParams();
     body.set('chatbot_id', this.selectedBot.id);
     body.set('index',index);
@@ -123,7 +122,7 @@ export class ClosedUsersPage implements OnInit {
         console.log("Failure response in closed users page",response);
         this.utils.showalert('Error','Something went wrong please try again after sometime','Ok');
       }else {
-        console.log("chat user response",(response as any).data);
+        console.log("Chat user response",(response as any).data);
         for(let i = ((response as any).data).answers.length; i > 0; i--){
           if(((response as any).data).answers[i-1].question_text != ''){
             let new_user_obj = {

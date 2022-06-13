@@ -37,13 +37,16 @@ export class PopovercomponentPage implements OnInit {
     console.log("Request feedback message",this.feedbackMsg);
   }
 
+
   ClosePopover(){
     this.popover.dismiss();
   }
 
+
   userInfoClicked(){
     this.route.navigate(['popoverinfo']);
   }
+
 
   getActiveChatUsers() {
     this.utils.showLoader("Please wait while we fetch your popover data...");
@@ -64,12 +67,14 @@ export class PopovercomponentPage implements OnInit {
     });
   }
   
+
   ///***  Active bot button clicked action ***///
   activebotClicked(new_user) {
     this.utils.setchatUserResponse(new_user);
     this.route.navigate(['chatmessenger']);
   }
 
+  
   @HostListener('window:popstate', ['$event'])
   dismissModal() {
     this.modalController.dismiss();

@@ -19,7 +19,7 @@ declare var window;
   styleUrls: ['./active-users.page.scss'],
 })
 
-export class ActiveUsersPage implements OnInit {
+export class ActiveUsersPage  {
   @ViewChild(IonContent) contentArea: IonContent;
   selectedBot:BotList;
   activeUsersList:Array<ChatUsersResponse>;
@@ -68,14 +68,14 @@ export class ActiveUsersPage implements OnInit {
   ngOnInit() {
     console.log ("Active chat tab");
     console.log("ACTIVE",this.activeUsersList);
-    console.log("selected bot",this.utils.getselectedbotList());
+    console.log("Selected bot",this.utils.getselectedbotList());
     this.selectedBot = this.utils.getselectedbotList();
-    console.log("selected bot",this.selectedBot);
-    console.log("selected bot id",this.selectedBot.id);
+    console.log("Selected bot",this.selectedBot);
+    console.log("Selected bot id",this.selectedBot.id);
     let currentTime = new Date().getTime().toLocaleString();
     let global_scope = this;
     this.socket.on('setsession', function(k) {
-      console.log("setsession response",k);
+      console.log("Setsession Response",k);
       let new_user = {
         bot_id: k.bot_id,
         bot_name: k.bot_name,
@@ -89,7 +89,8 @@ export class ActiveUsersPage implements OnInit {
         user_url: k.user_url,
         is_new: true,
         is_closed: k.is_closed,
-        messages: k.messages
+        messages: k.messages,
+        unread_messages_count: k.unread_messages_count
       }
       global_scope.addNewUser(new_user);
     });
@@ -99,13 +100,13 @@ export class ActiveUsersPage implements OnInit {
 
   ///***  Active bot button clicked action ***///
   addNewUser(new_user) {
-    console.log("before inserting",this.activeUsersList);
+    console.log("Before inserting",this.activeUsersList);
     this.activeUsersList.push(new_user);
-    console.log("after inserting",this.activeUsersList);
+    console.log("After inserting",this.activeUsersList);
   }
  
   closeChat(new_user){
-    console.log("activeuserslist before",this.activeUsersList);
+    console.log("Activeuserslist before",this.activeUsersList);
     for (var val of this.activeUsersList) {
       console.log(val);
       let session_id1 = new_user.data.session_id;
@@ -114,12 +115,12 @@ export class ActiveUsersPage implements OnInit {
         val.is_closed = "1";
       }
     }
-    console.log("activeuserslist after",this.activeUsersList);
+    console.log("Activeuserslist after",this.activeUsersList);
   }
   
 
   MarkasResolved(new_user){
-    console.log("activeuserslist before",this.activeUsersList);
+    console.log("Activeuserslist before",this.activeUsersList);
     for (var val of this.activeUsersList) {
       console.log(val);
       let session_id1 = new_user.data.session_id;
@@ -128,7 +129,7 @@ export class ActiveUsersPage implements OnInit {
         this.activeUsersList.splice(this.activeUsersList.indexOf(new_user),1);
       }
     }
-    console.log("activeuserslist after",this.activeUsersList);
+    console.log("Activeuserslist after",this.activeUsersList);
   }
     
   
@@ -154,7 +155,7 @@ export class ActiveUsersPage implements OnInit {
           event.target.complete();
       }
       let currentTime = new Date().getTime().toLocaleString();
-      console.log("Time",currentTime)
+      console.log("Time",currentTime);
       let global_scope = this;
       this.socket.on('usersentmessage', function(m) {
         console.log(m);
@@ -175,13 +176,13 @@ export class ActiveUsersPage implements OnInit {
     });
   }
     
-  ///***  Active bot button clicked action ***///
+  ///***Active bot button clicked action***///
   activebotClicked(new_user1) {
     this.contentArea.scrollToBottom(500);
     let currentTime = new Date();
     console.log("Date",currentTime);
-     let time= currentTime.getTime();
-     console.log("Time",time);
+    let time= currentTime.getTime();
+    console.log("Time",time);
     var k = currentTime.getTimezoneOffset();
     k = k*60*1000;
     console.log("K",k);
@@ -200,7 +201,7 @@ export class ActiveUsersPage implements OnInit {
         console.log("Failure response in Active users Page",response);
         this.utils.showalert('Error','Something went wrong please try again after sometime','Ok');
       } else {
-        console.log("chat user response",(response as any).data);
+        console.log("Chat User Response",(response as any).data);
         let chatmsgs = [];
         for(let  i = 0; i < ((response as any).data).answers.length; i++){
           if(((response as any).data).answers[i].question_text != ''){
@@ -254,7 +255,7 @@ export class ActiveUsersPage implements OnInit {
         this.utils.showalert('Error','Something went wrong please try again after sometime','Ok');
       } else {
         console.log("Success response in Reset Unread messages",(response as any).data);
-        if(new_user1.unreadMsgs > 0){
+        if((response as any).data.unreadMsgs > 0){
           this.unreadMsgsCount == true;
         }
       }

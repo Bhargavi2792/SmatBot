@@ -13,7 +13,7 @@ import { UtilsService } from '../../services/utils.service';
   templateUrl: './tabs.page.html',
   styleUrls: ['./tabs.page.scss'],
 })
-export class TabsPage implements OnInit {
+export class TabsPage  {
   selectedBot:BotList;
   title:string;
   constructor(private socket: Socket,

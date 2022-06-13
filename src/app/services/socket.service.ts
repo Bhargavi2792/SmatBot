@@ -8,20 +8,22 @@ import { Socket } from 'ngx-socket-io';
 export class SocketService {
   constructor(private socket: Socket) { }
 
+  ///*** Method to set socket id ***///
   setsocketid(object:any){
     this.socket.emit('setsocketid',object);
   }
 
+  ///*** Method to send device token ***///
   senddevicetoken(object:any){
     this.socket.emit('senddevicetoken',object);
   }
 
-  ///*** method to establish socket connection ***///
+  ///*** Method to establish socket connection ***///
   startSocketConnection(){
     this.socket.connect();
   }
 
-  ///*** method to stop socket connection ***///
+  ///*** Method to stop socket connection ***///
   stopSocketConnection(){
     this.socket.disconnect();
   }

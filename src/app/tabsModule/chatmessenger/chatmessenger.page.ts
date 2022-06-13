@@ -31,7 +31,7 @@ declare var window;
   templateUrl: './chatmessenger.page.html', 
   styleUrls: ['./chatmessenger.page.scss'],
 })
-export class ChatmessengerPage implements OnInit {
+export class ChatmessengerPage  {
   @ViewChild('content') private content: any;
   @ViewChild('filePicker', { static: false }) filePickerRef: ElementRef<HTMLInputElement>;
   photo = "";
@@ -48,6 +48,8 @@ export class ChatmessengerPage implements OnInit {
   showMsg = true;
   newMsg = '';
   isFrmClosedChat= '';
+  isStartedTyping= false;
+  typing:string;
   chats= [];
   uid='';
   otherUid= '';
@@ -55,7 +57,6 @@ export class ChatmessengerPage implements OnInit {
   picImage;
   imagePath:SafeUrl;
   imgUrl: '';
-  isstartedTyping: boolean;
   dateTime;
   croppedImagepath = "";
   isLoading = false;
@@ -87,7 +88,7 @@ export class ChatmessengerPage implements OnInit {
   private photoViewer: PhotoViewer,
   private backgroundMode: BackgroundMode,
   private file: File,
-  private transfer: FileTransfer,) { }
+  private transfer: FileTransfer) { }
   
 
   async getPicture() {
@@ -103,13 +104,13 @@ export class ChatmessengerPage implements OnInit {
     let request: ImageUpload = new ImageUpload();
     request.data = this.photo;
     let timestamp:any = new Date().getTime().toLocaleString();
-    console.log('timestamp',timestamp);
+    console.log('Timestamp',timestamp);
     let ext = 'jpeg';
     timestamp = timestamp + '.' + ext;
     request.file_name = timestamp;
     request.profile_id = '99';
     this.apiservice.getUploadImage(request).then((response) => {
-      console.log(response);
+      console.log("Response",response);
       this.utils.hideLoader();
       if((response as any).errorStatus) {
         console.log("Failure response in Image Upload ",response);
@@ -123,64 +124,13 @@ export class ChatmessengerPage implements OnInit {
     });
   }
   
-  async uploadFile(){
-    const fileTransfer: FileTransferObject = this.transfer.create();
-    let options: FileUploadOptions = {
-      fileKey: 'file',
-      fileName: 'ionicfile',
-      chunkedMode: false,
-      mimeType : "file",
-      headers: {}
-    }
-    fileTransfer.upload(this.imageURI, 'http://localhost/engace/api/api.php', options).then((data) => {
-      console.log(data + " Uploaded Successfully");
-      this.imageFileName = "http://192.168.0.7:8080/static/images/ionicfile.jpg"
-    }, (err) => {
-      console.log(err);
-    });
-  }
-  //  async uploadFile() {
-  //   const fileTransfer: FileTransferObject = this.transfer.create();
-  //   let options: FileUploadOptions = {
-  //     fileKey: 'file',
-  //     fileName: 'ionicfile',
-  //     chunkedMode: false,
-  //     mimeType: "image/jpeg",
-  //     headers: {}
-  //   }
-    // fileTransfer.upload(this.imageURI, 'http://localhost/engace/api/api.php', options).then((data) => {
-    //   console.log(data + " Uploaded Successfully");
-    //   this.imageFileName = "http://192.168.0.7:8080/static/images/ionicfile.jpg"
-    // }, (err) => {
-    //   console.log(err);
-    // });
-  // }
 
-  public download(fileName, filePath) {
-    let url = encodeURI(filePath);
-    const fileTransfer: FileTransferObject = this.transfer.create();
-    console.log(url);
-    fileTransfer.download(url, this.file.externalRootDirectory + fileName, true).then((entry) => {
-      console.log('download completed: ' + entry.toURL());
-    }, (error) => {
-      console.log('download failed: ' + error);
-    });
+  uploadPhoto(fileChangeEvent) {
+    const photo = fileChangeEvent.target.files[0];
+    let formData = new FormData();
+    formData.append("photo", photo, photo.name);
   }
-  
-  onFileChoose(event: Event) {
-    const file = (event.target as HTMLInputElement).files[0];
-    const pattern = /image-*/;
-    const reader = new FileReader();
-    if (!file.type.match(pattern)) {
-      console.log('File format not supported');
-      return;
-    }
-    reader.onload = () => {
-      this.photo = reader.result.toString();
-    };
-    reader.readAsDataURL(file);
-  }
-  
+
 
   async selectImage() {
     const actionSheet = await this.actionSheetController.create({
@@ -188,13 +138,13 @@ export class ChatmessengerPage implements OnInit {
       buttons: [{
         text: 'Load from Library',
         handler: () => {
-          // this.getPicture(CameraSource.Photos);
+
         }
       },
       {
         text: 'Use Camera',
         handler: () => {
-          // this.getPicture(CameraSource.Camera);
+
         }
       },
       {
@@ -205,6 +155,7 @@ export class ChatmessengerPage implements OnInit {
     await actionSheet.present();
   }
   
+
   isCustomerImgAvbl(msg):boolean { 
     let msgs = msg.split(";;");
     let imgName = msgs[0];
@@ -217,6 +168,7 @@ export class ChatmessengerPage implements OnInit {
     }
   }
   
+
   getsanitizedUrl(msg):boolean{
     let msgs = msg.split(";;");
     let imgName = msgs[0];
@@ -224,6 +176,7 @@ export class ChatmessengerPage implements OnInit {
     return imgUrl;
   }
   
+
   isImgAvbl(msg):boolean {
     let msgs = msg.split(";;");
     let imgName = msgs[0];
@@ -236,8 +189,9 @@ export class ChatmessengerPage implements OnInit {
     }
   }
 
+
   isUrlAvbl(msg):boolean {
-    let msgs = msg.split("http || www");
+    let msgs = msg.split(";;");
     let imgName = msgs[0];
     let imgUrl = msgs[1];
     if(imgName === '/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g'){
@@ -248,6 +202,7 @@ export class ChatmessengerPage implements OnInit {
     }
   }
   
+
   getImgUrl(msg):boolean {
     let msgs = msg.split(";;");
     let imgName = msgs[0];
@@ -255,6 +210,7 @@ export class ChatmessengerPage implements OnInit {
     return imgUrl;
   }
   
+
   showUserDetails(ev){
     this.popover.create({component:PopovercomponentPage,
     event: ev,showBackdrop:true}).then((popoverElement)=>{
@@ -262,11 +218,12 @@ export class ChatmessengerPage implements OnInit {
     })
   }
   
+  
   async CreateActivepopup(ev){
     const popover = await this.activepopup.create({component:ActivepopupPage,
     event: ev,componentProps:{"paramId":this.chatUser},backdropDismiss:true});
     popover.onDidDismiss().then((res)=>{
-      console.log(res);
+      console.log("Response",res);
       if(res.role == 'CloseChat'){
         window.ActiveUsersPage.closeChat(res);
         this.route.navigate(['tabs']);
@@ -286,23 +243,26 @@ export class ChatmessengerPage implements OnInit {
     this.socket.on('usertyping',function(n){
       console.log("User typing started");
       console.log(n);
-      this.isstartedTyping === true;
+        if(this.isStartedTyping = true){
+          this.typing = 'typing...';
+          console.log(this.typing);
+        }
+        console.log("user",this.isStartedTyping);
     });
     this.socket.on('usertypingstopped',function(k){
       console.log("User typing stopped");
       console.log(k);
-      this.isstartedTyping === false;
     });
     this.chatUser = this.utils.getchatUserResponse();
     this.selectedBot = this.utils.getselectedbotList();
     this.title = this.chatUser.ip_address;
-    console.log("selected chat user",this.chatUser);
-
+    console.log("Selected Chat User",this.chatUser);
     this._Activatedroute.paramMap.subscribe(params =>{
       console.log("Value",params.get('isfrmclosedchat'));
       this.isFrmClosedChat = params.get('isfrmclosedchat');
     });
     if(this.isFrmClosedChat === 'false'){
+      console.log("isfrom closd chats",this.isFrmClosedChat);
       console.log("Form validations");
       this.setFormValidation();
     }
@@ -339,9 +299,10 @@ export class ChatmessengerPage implements OnInit {
       }
     });
   }
+  
 
   clickImage(image){
-    console.log("image clicked",image);
+    console.log("Image Clicked",image);
     this.photoViewer.show(image);
   }
 
@@ -367,9 +328,9 @@ export class ChatmessengerPage implements OnInit {
 
   
   addNewUser(new_user) {
-    console.log("before inserting",this.activeUsersList);
+    console.log("Before Inserting",this.activeUsersList);
     this.activeUsersList.push(new_user);
-    console.log("after inserting",this.activeUsersList);
+    console.log("After Inserting",this.activeUsersList);
   }
   
     
@@ -380,12 +341,13 @@ export class ChatmessengerPage implements OnInit {
     });
   }
   
+
   ///*** Send message btn action ***///
   sendMessageBtnAction(){
     let body = new URLSearchParams();
     body.set('chatbot_id',this.selectedBot.id);
-    console.log("Send Message button action");
-    console.log("Entered text",this.footerForm.value.inputText);
+    console.log("Send Message Button Action");
+    console.log("Entered Text",this.footerForm.value.inputText);
     let newObj = '';
     if(this.photo!==''){
       newObj = this.photo;
@@ -394,7 +356,7 @@ export class ChatmessengerPage implements OnInit {
       newObj = this.footerForm.value.inputText;
     }
     let currentTime = new Date().toISOString();
-    console.log("current date",currentTime);
+    console.log("Current date",currentTime);
     this.footerForm.reset();
     let chatUser = this.utils.getchatUserResponse();
     let obj = {
@@ -420,32 +382,28 @@ export class ChatmessengerPage implements OnInit {
       created_at :  currentTime,
       message : newObj
     }
-    // this.socketservice.userSentMessage(msgObj);
     if (this.chatUser.messages && this.chatUser.messages.length > 0) {
     }
     else {
       this.chatUser.messages = new Array<Messages>();
     }
     this.chatUser.messages.push(msgObj);
-    // this.capturedImage = '';
-    // this.contentArea.scrollToBottom();
     console.log("Chat user messages",this.chatUser.messages);
     this.content.scrollToBottom(500);
     this.photo = '';
   }
 
-
-  userStartedTyping() {
-    if(this.footerForm.value.inputText > 0){
+  adminStartedTyping() {
+    if(this.footerForm.value.inputText !=''){
       console.log("Admin started typing method called");
       this.socket.on('admintyping',function(k){
-        console.log(k);
+        console.log("Admin typing",k);
       });
     }
     else{
       console.log("Admin stopped typing method called");
       this.socket.on('admintypingstopped',function(l){
-        console.log(l);
+        console.log("Admin typing stopped",l);
       });
     }
   }

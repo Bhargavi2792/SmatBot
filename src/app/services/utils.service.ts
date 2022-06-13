@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { AlertController,LoadingController} from '@ionic/angular';
-import { BotList} from '../Model/botList';
+import { AlertController,LoadingController } from '@ionic/angular';
+import { BotList } from '../Model/botList';
 import { ChatUsersResponse } from '../Model/chatusersresponse';
-import { ProfileResponse} from '../Model/profileresponse';
-import {Subject} from 'rxjs';
+import { ProfileResponse } from '../Model/profileresponse';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -156,7 +156,5 @@ export class UtilsService {
   gettoken(): Subject<any>{
     return this.token;
   }
-
-
 }
 

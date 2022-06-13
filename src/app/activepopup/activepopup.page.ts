@@ -19,11 +19,11 @@ export class ActivepopupPage implements OnInit {
   bot:ChatUsersResponse;
   showUserInfoBtn:boolean;
   assignAgent: Array<AssignAgent>;
-  constructor(private activepopup:PopoverController,
+  constructor(private activepopup: PopoverController,
   private socket: Socket,
   private route : Router,
-  public navParams:NavParams,
-  public utilservice :UtilsService,
+  public navParams: NavParams,
+  public utilservice : UtilsService,
   private apiservice : ApiService,
   private modalController: ModalController) { }
   

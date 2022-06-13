@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { BotslistPageRoutingModule } from './botslist-routing.module';
 import { BotslistPage } from './botslist.page';
-import {ComponentsModule} from '../../components/components.module';
+import { ComponentsModule } from '../../components/components.module';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 

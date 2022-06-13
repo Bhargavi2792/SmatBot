@@ -1,4 +1,4 @@
-import {customer_email_credential} from './customer_email_credential';
+import { customer_email_credential } from './customer_email_credential';
 export class ProfileResponse {
     status: '' ;
     email: '';

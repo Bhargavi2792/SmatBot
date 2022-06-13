@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from '../../services/api.service';
 import { UtilsService } from '../../services/utils.service';
@@ -16,7 +16,7 @@ import { Platform,ActionSheetController } from '@ionic/angular';
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })  
-export class LoginPage implements OnInit {
+export class LoginPage {
   loginForm: FormGroup;
   subscribe:any;
   pushes: any = [];
@@ -38,7 +38,7 @@ export class LoginPage implements OnInit {
   public actionSheetController: ActionSheetController
   ) { }
 
-  ngOnInit() {
+  ngOnInit()  {
     this.setFormValidations();
   }
 
@@ -53,7 +53,7 @@ export class LoginPage implements OnInit {
     });
   }
   
-  ///*** Sign-in button action ***///
+  ///*** Sign-in Button Action ***///
   signinbtnclicked() {
     this.utils.showLoader("Please wait while we are logging you in...");
     console.log("SignIn button clicked");
@@ -67,7 +67,6 @@ export class LoginPage implements OnInit {
     console.log ("Login Request",request);
     this.apiservice.validateloginData(request).then((response) => {
       if((response as any).errorStatus) {
-        this.loginForm.reset();
         this.utils.hideLoader();
         console.log("Failure response in login page",response);
         console.log("Failure response status in login page",(response as any).data.status);
@@ -79,7 +78,7 @@ export class LoginPage implements OnInit {
         }
       } else {
         this.loginForm.reset();
-        console.log("token",(response as any).data.AuthToken);
+        console.log("Token",(response as any).data.AuthToken);
         localStorage.setItem("token",(response as any).data.AuthToken);
         console.log("Success response in login page",(response as any).data);
         this.socket.startSocketConnection();
@@ -94,8 +93,8 @@ export class LoginPage implements OnInit {
             console.log("Failure response in login page",response);
             this.utils.showalert('Error','Something went wrong please try again after sometime','Ok');
           } else {
-            this.socket.setagentsession({agent_id:response.data.agent_id,
-            agent_name: response.data.full_name,
+            this.socket.setagentsession({agent_id:(response as any).data.agent_id,
+            agent_name: (response as any).data.full_name,
             agent_status:(response as any).data.agent_status,
             token:(response as any).data.AuthToken});
             localStorage.setItem("agent_id",(response as any).data.agent_id);
@@ -103,6 +102,11 @@ export class LoginPage implements OnInit {
             localStorage.setItem("agent_status",(response as any).data.agent_status);
             localStorage.setItem("email",(response as any).data.email);
             localStorage.setItem("isLoggedIn","true");
+            this.utils.setagentStatusData({
+              agentStatus: (response as any).data.agent_status,
+              full_name : (response as any).data.full_name,
+              email : (response as any).data.email 
+            });
             this.route.navigate(['botslist']);
           }
         });
@@ -110,13 +114,13 @@ export class LoginPage implements OnInit {
     })
   } 
   
-  ///*** forgot pswrd button action ***///
+  ///*** Forgot Password Button Action ***///
   forgotpswrdbtnclicked(){
     console.log("Forgot password button clicked");
     this.route.navigate(['forgot-password']);
   }
   
-  ///*** sign Up button action ***///
+  ///*** Sign Up Button Action ***///
   signupdbtnclicked(){
     console.log("Sign Up button clicked");
     this.route.navigate(['sign-up']);

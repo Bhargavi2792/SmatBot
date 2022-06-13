@@ -1,5 +1,5 @@
-import {Messages} from './messages';
-import {Answers} from './answers';
+import { Messages } from './messages';
+import { Answers } from './answers';
 export class ChatUsersResponse {
     session_id ='';
     device_print ='';

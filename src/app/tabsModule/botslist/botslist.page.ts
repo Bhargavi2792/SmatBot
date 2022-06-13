@@ -13,7 +13,7 @@ import { Socket } from 'ngx-socket-io';
   templateUrl: './botslist.page.html',
   styleUrls: ['./botslist.page.scss'],
 })
-export class BotslistPage implements OnInit {
+export class BotslistPage {
   filterItem: string;
   title:string;
   public chatbots: Array<BotList> = [];

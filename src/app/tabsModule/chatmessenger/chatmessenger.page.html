@@ -1,5 +1,5 @@
 <ion-header slot="fixed">
-  <ion-toolbar>
+  <ion-toolbar size="small">
     <ion-title *ngIf="isFrmClosedChat ==='false'" style="font-size: 16px !important;color: #FFFFFF !important;">{{title}}</ion-title>
     <ion-title *ngIf="isFrmClosedChat ==='true'" style="position: start;margin-left:0px !important;color: #FFFFFF !important;">Transcript</ion-title>
     <ion-buttons slot="start">
@@ -14,17 +14,12 @@
     </ion-button>
   </ion-buttons>
   </ion-toolbar>
-  <ion-toolbar *ngIf="isstartedTyping ==='true'" color="primary">
-    <ion-title size="small" style="position: start;color:#FFFFFF !important">typing...</ion-title>
+  <ion-toolbar *ngIf="isStartedTyping ==='true'" color="primary">
+    <ion-title size="small" style="position: start;color:#FFFFFF !important">{{typing}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content #content>
-  <ion-row>
-    <ion-col *ngIf="isstartedTyping ==='true'" color="primary">
-      <ion-text size="small" style="position: start;color:blue !important">typing...</ion-text>
-    </ion-col>
-  </ion-row>
   <ion-row >
     <ion-col *ngIf="chatUser.messages == ''">
       <div class="ion-text-center">
@@ -47,9 +42,8 @@
       <ion-col offset="4" size="8"  *ngIf="message.type ==='customer'"  class="message my-message" text-right  style="height:fit-content;padding-right: 10px !important;">
         <div *ngIf="!isCustomerImgAvbl(message.text)" [innerHtml]="message.text"></div>
         <img *ngIf="isCustomerImgAvbl(message.text)" src = "{{setmsgText(message.text)}}" height="200" width="200" >  
-        <div *ngIf="isUrlAvbl(message.text)">
-          <a [href]="message.text"></a>
-        </div>  
+        <a [href] *ngIf="isUrlAvbl(message.text)">
+        </a>  
         <ion-icon class="time ion-text-right" name="checkmark"></ion-icon>
         <div class="time ion-text-right">
           {{message.created_at | date:'HH:mm'}}
@@ -65,12 +59,17 @@
       <ion-row align-items-center style="padding-right: 5px !important;">
         <ion-col size="8">
           <ion-input maxRows="4" 
-          (ionChange)="userStartedTyping()" 
-          style="position:relative;padding-left:10px!important;padding-right:10px!important;color: black !important;" 
+          (ionChange)="adminStartedTyping()" 
+          style="position:relative;padding-left:10px!important;padding-right:10px!important;
+          color: black !important;" 
           strong="true" 
           formControlName="inputText"
           placeholder="Type here..."
           autofocus="true"></ion-input>
+        </ion-col>
+        <ion-col>
+          <input type="file" (change)="onFileChange($event)" />
+          <!-- <ion-icon name="document-outline"></ion-icon> -->
         </ion-col>
         <ion-col size="2">
           <ion-button (click)="getPicture()" fill="clear">
@@ -78,7 +77,7 @@
           </ion-button>
         </ion-col>
         <ion-col size="2">
-          <ion-button  type="submit"  
+          <ion-button type="submit"  
           fill="clear"
           (mousedown)="sendMessageBtnAction(); $event.preventDefault()">
           <ion-img style="height:24px; width:24px;" src="https://custpostimages.s3.ap-south-1.amazonaws.com/sb_images/mobile_app_send_icon.png"></ion-img>

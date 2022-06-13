@@ -12,7 +12,7 @@ import { BackgroundMode } from '@ionic-native/background-mode/ngx';
 import { Location } from '@angular/common';
 import { Capacitor } from '@capacitor/core';
 import { App } from '@capacitor/app';
-import {ActionPerformed,PushNotificationSchema,PushNotifications,Token,} from '@capacitor/push-notifications';
+import {ActionPerformed,PushNotificationSchema,PushNotifications,Token} from '@capacitor/push-notifications';
 
 
 const isPushNotificationsAvailable = Capacitor.isPluginAvailable('PushNotifications');
@@ -199,7 +199,8 @@ export class AppComponent {
       if(response) {
         console.log("Ok button clicked");
         localStorage.clear();
-        // localStorage.setItem("isLoggedIn","false");
+        localStorage.setItem("isLoggedIn","false");
+        this.socket.stopSocketConnection();
         this.route.navigate(['login']);
       } else {
         console.log("Cancel button clicked");

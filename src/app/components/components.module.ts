@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {PrimaryheaderComponent} from '../components/primaryheader/primaryheader.component';
-import {IonicModule} from '@ionic/angular';
+import { PrimaryheaderComponent } from '../components/primaryheader/primaryheader.component';
+import { IonicModule } from '@ionic/angular';
 
 
 @NgModule({
