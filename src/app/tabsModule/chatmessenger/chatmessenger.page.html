@@ -57,7 +57,7 @@
   <form [formGroup]="footerForm">
     <ion-grid style="padding-top: 0%;padding-bottom: 0%;">
       <ion-row align-items-center style="padding-right: 5px !important;">
-        <ion-col size="8">
+        <ion-col size="6">
           <ion-input maxRows="4" 
           (ionChange)="adminStartedTyping()" 
           style="position:relative;padding-left:10px!important;padding-right:10px!important;
@@ -67,28 +67,22 @@
           placeholder="Type here..."
           autofocus="true"></ion-input>
         </ion-col>
-        <ion-col>
-          <input type="file" (change)="onFileChange($event)" />
-          <!-- <ion-icon name="document-outline"></ion-icon> -->
+        <ion-col size="2">
+          <input accept="application/file"  #fileInput type="file" (change)="onFileChange($event)" />
+          <ion-img  style="height:24px; width:24px;" src="https://custpostimages.s3.ap-south-1.amazonaws.com/sb_images/mobile_app_attached_icon.png"></ion-img>
         </ion-col>
         <ion-col size="2">
           <ion-button (click)="getPicture()" fill="clear">
-            <ion-img style="height:24px; width:24px;" src="https://custpostimages.s3.ap-south-1.amazonaws.com/sb_images/mobile_app_attached_icon.png"></ion-img>
+            <ion-img  style="height:24px; width:24px;" src="https://custpostimages.s3.ap-south-1.amazonaws.com/sb_images/mobile_app_attached_icon.png"></ion-img>
           </ion-button>
         </ion-col>
         <ion-col size="2">
-          <ion-button type="submit"  
+          <ion-button type="submit" [disabled]="!footerForm.valid" 
           fill="clear"
           (mousedown)="sendMessageBtnAction(); $event.preventDefault()">
-          <ion-img style="height:24px; width:24px;" src="https://custpostimages.s3.ap-south-1.amazonaws.com/sb_images/mobile_app_send_icon.png"></ion-img>
+          <ion-img  style="height:24px; width:24px;" src="https://custpostimages.s3.ap-south-1.amazonaws.com/sb_images/mobile_app_send_icon.png"></ion-img>
           </ion-button>
         </ion-col>
-        <!-- <ion-col size="2">
-          <ion-buttons slot="primary">
-            <ion-button color="danger" fill="outline" (click)="createPdf()">
-              View PDF
-            </ion-button>
-        </ion-col> -->
       </ion-row>
     </ion-grid>
   </form>

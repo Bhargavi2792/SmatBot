@@ -33,8 +33,12 @@ declare var window;
 })
 export class ChatmessengerPage  {
   @ViewChild('content') private content: any;
+  @ViewChild('fileInput') fileInputClick: ElementRef;
   @ViewChild('filePicker', { static: false }) filePickerRef: ElementRef<HTMLInputElement>;
   photo = "";
+  document:any;
+  filepath = "";
+  emptymsg = "";
   messageDateString = "";
   isDesktop: boolean;
   footerForm: FormGroup;
@@ -119,16 +123,49 @@ export class ChatmessengerPage  {
         this.imgUrl = response.data.url;
         console.log("Image URl",this.imgUrl);
         this.photo = 'live_chat_image_upload;;'+ this.imgUrl;
+        console.log("photo",this.photo);
         this.sendMessageBtnAction();
       }
     });
   }
   
 
-  uploadPhoto(fileChangeEvent) {
-    const photo = fileChangeEvent.target.files[0];
-    let formData = new FormData();
-    formData.append("photo", photo, photo.name);
+  buttonClick() {
+    this.fileInputClick.nativeElement.click();
+  }
+  
+  onFileChange(event) {
+    const photo = event.target.files[0];
+    console.log("Photo",photo);
+    var fileReader = new FileReader();
+    fileReader.readAsDataURL(event.target.files[0]);
+    fileReader.onload = () => {
+      console.log("Filereader",fileReader.result);
+      this.document = fileReader.result;
+      console.log("Document",this.document);
+      let request: ImageUpload = new ImageUpload();
+      request.data = this.document;
+      let timestamp:any = new Date().getTime().toLocaleString();
+      console.log('Timestamp',timestamp);
+      let ext = 'pdf';
+      timestamp = timestamp + '.' + ext;
+      request.file_name = timestamp;
+      request.profile_id = "99";
+      this.apiservice.getUploadFile(request).then((response) => {
+        console.log("Response",response);
+        this.utils.hideLoader();
+        if((response as any).errorStatus) {
+          console.log("Failure response in Image Upload ",response);
+          this.utils.showalert('Error','Something went wrong please try again after sometime','Ok');
+        }else {
+          this.imgUrl = response.data.url;
+          console.log("Image URl",this.imgUrl);
+          this.document =  'live_chat_image_upload;;'+this.imgUrl;
+          console.log("document",this.document);
+          this.sendMessageBtnAction();
+        }
+      });
+    }
   }
 
 
@@ -353,6 +390,16 @@ export class ChatmessengerPage  {
       newObj = this.photo;
     }
     else{
+      if(this.document!==''){
+        newObj = this.document;
+      }
+      else{
+        if(this.footerForm.value.inputText==''){
+          this.utils.showalert('Error','Message cannot be empty','Ok');
+          newObj = this.emptymsg;
+        }
+      }
+      
       newObj = this.footerForm.value.inputText;
     }
     let currentTime = new Date().toISOString();
@@ -435,7 +482,7 @@ export class ChatmessengerPage  {
     if (new Date(this.messages[messageIndex].timeStamp).getFullYear() ===new Date().getFullYear()) {
       if (this.messageDateString === today) {
         return "Today";
-      } else if (this.messageDateString === yesterday) {
+      } else if (this.messageDateString === yesterday) {3
         return "Yesterday";
       } else {
         return this.messageDateString;

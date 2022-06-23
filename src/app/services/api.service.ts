@@ -287,12 +287,13 @@ export class ApiService {
   getUploadFile(request):Promise<any> {
     let httpImageUpload = {
       headers : new HttpHeaders({
+        'Authorization': localStorage.getItem('token'),
         'Content-Type':'application/x-www-form-urlencoded'
       })
     }
     let body = "data=" +request.data + "&file_name=" + request.file_name +"&profile_id=" + request.profile_id;
     return new Promise(resolve =>{
-      this.http.post('https://www.app.feltso.com/kya_backend/Api/uploadImageFile',body,httpImageUpload).subscribe(response => {
+      this.http.post('https://www.app.smatbot.com/kya_backend/Api/uploadCPImage',body,httpImageUpload).subscribe(response => {
         console.log("Response",response);
         let responseInfo: any = {};
         responseInfo.errorStatus = false;

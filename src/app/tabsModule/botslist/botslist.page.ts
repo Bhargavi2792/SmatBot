@@ -27,12 +27,12 @@ export class BotslistPage {
   
   ngOnInit() {
     this.socketservice.startSocketConnection();
+    this.getChatbots(null);
     this.utils.setagentStatusData({
       agentStatus: localStorage.getItem("agent_status"),
       full_name : localStorage.getItem("full_name"),
       email : localStorage.getItem("email") 
     });
-    this.getChatbots(null);
     this.title = 'Bot List';
   }
   
@@ -43,7 +43,6 @@ export class BotslistPage {
   
 
   getChatbots(event) {
-    this.utils.showLoader("Please wait while we fetch your Botlist...");
     this.apiservice.getChatbots().then((response) => {
       console.log(response);
       this.utils.hideLoader();
